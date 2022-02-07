@@ -35,7 +35,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create translation", () => {
+    it("should be able to create new translation. TC:SALEOR_1701", () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
       const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
@@ -60,7 +60,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       });
     });
 
-    it("should update translation", () => {
+    it("should be able to update translation. TC:SALEOR_1702", () => {
       const randomNumber = faker.datatype.number();
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;
