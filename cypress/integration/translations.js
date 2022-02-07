@@ -10,11 +10,12 @@ import { LANGUAGES_LIST } from "../../elements/translations/languages-list";
 import { urlList } from "../../fixtures/urlList";
 import {
   createCategory,
-  getCategory
-} from "../../support/api/requests/Category";
-import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
-import filterTests from "../../support/filterTests";
-import { enterCategoryTranslation } from "../../support/pages/translationPage";
+  getCategory,
+  updateCategoryTranslation
+} from "../support/api/requests/Category";
+import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
+import filterTests from "../support/filterTests";
+import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
   describe("Tests for translations", () => {
