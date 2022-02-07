@@ -35,44 +35,18 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
     });
 
     it("should create translation", () => {
-      cy.visit(urlList.translations);
-      enterCategoryTranslation(
-        LANGUAGES_LIST.polishLanguageButton,
-        category.name
-      );
-      cy.get(ELEMENT_TRANSLATION.editNameButton)
-        .click()
-        .get(SHARED_ELEMENTS.skeleton)
-        .should("not.exist")
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedName${randomNumber}`)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear()
-        .get(ELEMENT_TRANSLATION.editDescriptionButton)
-        .click()
-        .get(SHARED_ELEMENTS.richTextEditor.loader)
-        .should("not.exist")
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedDescription${randomNumber}`)
-        .wait(500)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear()
-        .get(ELEMENT_TRANSLATION.editSeoTitleButton)
-        .click()
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedSeoTitle${randomNumber}`)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear()
-        .get(ELEMENT_TRANSLATION.editSeoDescriptionButton)
-        .click()
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedSeoDescription${randomNumber}`)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear();
+      const translatedName = `TranslatedName${randomNumber}`;
+      const translatedDescription = `TranslatedDescription${randomNumber}`;
+      const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
+      const translatedSeoDescription = `TranslatedSeoDescription${randomNumber}`;
+
+      updateTranslationToCategory({
+        categoryName: category.name,
+        translatedName,
+        translatedDescription,
+        translatedSeoTitle,
+        translatedSeoDescription
+      });
       getCategory(category.id, "PL").then(({ translation }) => {
         expect(translation.name).to.eq(`TranslatedName${randomNumber}`);
         expect(translation.description).to.includes(
@@ -83,6 +57,40 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
           `TranslatedSeoDescription${randomNumber}`
         );
       });
+    });
+
+    it("should update translation", () => {
+      const randomNumber = faker.datatype.number();
+      const startWithUpdate = `Translations_Update_${randomNumber}`;
+      const seoTitleUpdate = `${startWithUpdate}_seoTitle`;
+      const seoDescriptionUpdate = `${startWithUpdate}_seoDescription`;
+      const nameUpdate = `${startWithUpdate}_nameUpdate`;
+      const descriptionUpdate = `${startWithUpdate}_descryptionUpdate`;
+
+      updateCategoryTranslation({
+        categoryTranslateId: category.id,
+        languageCode: "PL",
+        seoTitle: "test",
+        seoDescription: "test",
+        name: "test",
+        description: "test"
+      })
+        .then(() => {
+          updateTranslationToCategory({
+            categoryName: category.name,
+            translatedName: nameUpdate,
+            translatedDescription: descriptionUpdate,
+            translatedSeoTitle: seoTitleUpdate,
+            translatedSeoDescription: seoDescriptionUpdate
+          });
+          getCategory(category.id, "PL");
+        })
+        .then(({ translation }) => {
+          expect(translation.name).to.eq(nameUpdate);
+          expect(translation.description).to.includes(descriptionUpdate);
+          expect(translation.seoTitle).to.eq(seoTitleUpdate);
+          expect(translation.seoDescription).to.includes(seoDescriptionUpdate);
+        });
     });
   });
 });
