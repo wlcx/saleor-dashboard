@@ -1,0 +1,5 @@
+name: Saleor Test Execution
+
+on: #when should be executed
+
+job: #what should be done
