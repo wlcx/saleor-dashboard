@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import { ChannelData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
@@ -24,7 +25,7 @@ import {
   ProductFragment,
   RefreshLimitsQuery
 } from "@saleor/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles, Tooltip } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -208,6 +209,7 @@ interface ProductVariantsProps extends ListActions, ChannelProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   product: ProductFragment;
   variants: ProductDetailsVariantFragment[];
+  channels: ChannelData[];
   onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
   onSetDefaultVariant(variant: ProductDetailsVariantFragment[][0]);
@@ -223,6 +225,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     limits,
     variants,
     product,
+    channels,
     onRowClick,
     onVariantAdd,
     onVariantsAdd,
@@ -241,6 +244,8 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const [warehouse, setWarehouse] = React.useState<string>(null);
   const hasVariants = maybe(() => variants.length > 0, true);
   const limitReached = isLimitReached(limits, "productVariants");
+
+  const allChannelsDisabled = !channels?.some(channel => channel.isActive);
 
   return (
     <Card>
@@ -263,17 +268,30 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               />
             </Button>
           ) : (
-            <Button
-              disabled={limitReached}
-              onClick={onVariantsAdd}
-              variant="tertiary"
-              data-test-id="button-add-variants"
+            <Tooltip
+              disabled={!allChannelsDisabled}
+              variant="warning"
+              placement="top"
+              title={intl.formatMessage({
+                defaultMessage:
+                  "At least one channel needs to be active to create variants",
+                description: "inactive variant creator label"
+              })}
             >
-              <FormattedMessage
-                defaultMessage="Create variants"
-                description="button"
-              />
-            </Button>
+              <span>
+                <Button
+                  disabled={limitReached || allChannelsDisabled}
+                  onClick={onVariantsAdd}
+                  variant="tertiary"
+                  data-test-id="button-add-variants"
+                >
+                  <FormattedMessage
+                    defaultMessage="Create variants"
+                    description="button"
+                  />
+                </Button>
+              </span>
+            </Tooltip>
           )
         }
       />

@@ -38,6 +38,7 @@ export interface ChannelData {
   visibleInListings?: boolean;
   preorderThreshold?: number;
   unitsSold?: number;
+  isActive?: boolean;
 }
 
 export interface ChannelPriceData {
@@ -187,7 +188,8 @@ export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
     name: channel.name,
     price: "",
     publicationDate: null,
-    visibleInListings: false
+    visibleInListings: false,
+    isActive: channel.isActive
   })) || [];
 
 export const createChannelsDataWithPrice = (

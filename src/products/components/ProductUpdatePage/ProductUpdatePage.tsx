@@ -354,6 +354,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     limits={limits}
                     variants={variants}
                     product={product}
+                    channels={data.channelListings}
                     onRowClick={onVariantShow}
                     onVariantAdd={onVariantAdd}
                     onVariantsAdd={onVariantsAdd}
