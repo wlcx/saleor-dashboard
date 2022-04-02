@@ -1788,6 +1788,7 @@ export const ProductVariantAttributesFragmentDoc = gql`
       id
       name
       currencyCode
+      isActive
     }
   }
 }
