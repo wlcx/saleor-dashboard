@@ -85,12 +85,14 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           bulkProductVariantCreateOpts.data?.productVariantBulkCreate.errors ||
           []
         }
-        channelListings={data?.product?.channelListings?.map(listing => ({
-          currency: listing.channel.currencyCode,
-          id: listing.channel.id,
-          name: listing.channel.name,
-          price: ""
-        }))}
+        channelListings={data?.product?.channelListings
+          ?.filter(listing => listing.channel.isActive)
+          .map(listing => ({
+            currency: listing.channel.currencyCode,
+            id: listing.channel.id,
+            name: listing.channel.name,
+            price: ""
+          }))}
         attributes={data?.product?.productType?.variantAttributes || []}
         attributeValues={attributeValues}
         fetchAttributeValues={searchAttributeValues}
