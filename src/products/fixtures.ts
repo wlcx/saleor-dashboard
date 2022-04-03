@@ -217,7 +217,8 @@ export const product: (
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",
-        name: "Channel1"
+        name: "Channel1",
+        isActive: true
       },
       isAvailableForPurchase: false,
       isPublished: true,
@@ -253,7 +254,8 @@ export const product: (
         __typename: "Channel",
         currencyCode: "USD",
         id: "124",
-        name: "Channel2"
+        name: "Channel2",
+        isActive: true
       },
       isAvailableForPurchase: false,
       isPublished: false,

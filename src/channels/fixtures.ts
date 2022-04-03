@@ -150,6 +150,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
     availableForPurchase: null,
     channel: {
       __typename: "Channel",
+      isActive: true,
       currencyCode: "USD",
       id: "123",
       name: "Channel1"
@@ -180,6 +181,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
     availableForPurchase: null,
     channel: {
       __typename: "Channel",
+      isActive: true,
       currencyCode: "USD",
       id: "124",
       name: "Channel2"
@@ -210,6 +212,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
     availableForPurchase: null,
     channel: {
       __typename: "Channel",
+      isActive: false,
       currencyCode: "USD",
       id: "125",
       name: "Channel3"
