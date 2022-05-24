@@ -9,7 +9,7 @@ import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { WebhookFormData } from "../WebhooksDetailsPage/WebhooksDetailsPage";
+import { WebhookFormData } from "../../types";
 import { messages } from "./messages";
 
 interface WebhookInfoProps {

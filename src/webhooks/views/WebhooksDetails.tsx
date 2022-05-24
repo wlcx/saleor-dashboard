@@ -13,7 +13,7 @@ import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
 import WebhookDetailsPage from "../components/WebhookDetailsPage";
-import { WebhookFormData } from "../components/WebhooksDetailsPage/WebhooksDetailsPage";
+import { WebhookFormData } from "../types";
 
 export interface WebhooksDetailsProps {
   id: string;
