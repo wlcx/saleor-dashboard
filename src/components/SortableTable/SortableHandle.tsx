@@ -12,6 +12,9 @@ const useStyles = makeStyles(
       },
       cursor: "grab",
       width: `calc(48px + ${theme.spacing(1.5)})`
+    },
+    icon: {
+      color: theme.palette.saleor.main[3]
     }
   }),
   { name: "SortableHandle" }
@@ -22,7 +25,7 @@ const SortableHandle = SortableHandleHoc(() => {
 
   return (
     <TableCell className={classes.columnDrag}>
-      <DragIcon color="primary" />
+      <DragIcon color="inherit" className={classes.icon} />
     </TableCell>
   );
 });
