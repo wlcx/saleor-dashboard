@@ -205,7 +205,7 @@ describe("Orders", () => {
             .type("1")
             .addAliasToGraphRequest("OrderFulfillmentRefundProducts");
           cy.get(BUTTON_SELECTORS.submit)
-            .click()
+            .click({ force: true })
             .waitForRequestAndCheckIfNoErrors(
               "@OrderFulfillmentRefundProducts",
             );
