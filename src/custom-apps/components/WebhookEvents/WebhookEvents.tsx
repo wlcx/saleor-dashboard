@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import Hr from "@saleor/components/Hr";
+import Grid from "@saleor/components/Grid";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
 } from "@saleor/components/MultiAutocompleteSelectField";
@@ -43,52 +43,55 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     <Card>
       <CardTitle title={intl.formatMessage(messages.events)} />
       <CardContent>
-        <Typography variant="caption">
-          <FormattedMessage {...messages.synchronousEvents} />
-        </Typography>
-        <VerticalSpacer />
-        <Typography variant="body1">
-          <FormattedMessage
-            {...messages.assignPermissionsToSynchronousEvents}
-          />
-        </Typography>
-        <VerticalSpacer />
-        <MultiAutocompleteSelectField
-          displayValues={mapSyncEventsToChoices(data.syncEvents)}
-          label={intl.formatMessage(messages.registeredEvents)}
-          choices={syncEventsChoices}
-          name="syncEvents"
-          value={data.syncEvents}
-          onChange={onSyncEventChange}
-          data-test-id="syncEvents"
-          testId="syncEvent"
-        />
-        <VerticalSpacer spacing={2} />
-        <Hr />
-        <VerticalSpacer spacing={2} />
-        <Typography variant="caption">
-          <FormattedMessage {...messages.asynchronousEvents} />
-        </Typography>
-        <VerticalSpacer />
-        <Typography variant="body1">
-          <FormattedMessage
-            {...messages.assignPermissionsToAsynchronousEvents}
-          />
-        </Typography>
-        <VerticalSpacer />
-        <MultiAutocompleteSelectField
-          displayValues={mapAsyncEventsToChoices(
-            data.asyncEvents,
-            data.asyncEvents,
-          )}
-          label={intl.formatMessage(messages.registeredEvents)}
-          choices={asyncEventsChoices}
-          name="asyncEvents"
-          value={data.asyncEvents}
-          onChange={onAsyncEventChange}
-          data-test-id="asyncEvents"
-          testId="asyncEvent"
-        />
+        <Grid variant="uniform">
+          <div>
+            <Typography variant="caption">
+              <FormattedMessage {...messages.synchronousEvents} />
+            </Typography>
+            <VerticalSpacer />
+            <Typography variant="body1">
+              <FormattedMessage
+                {...messages.assignPermissionsToSynchronousEvents}
+              />
+            </Typography>
+            <VerticalSpacer />
+            <MultiAutocompleteSelectField
+              displayValues={mapSyncEventsToChoices(data.syncEvents)}
+              label={intl.formatMessage(messages.registeredEvents)}
+              choices={syncEventsChoices}
+              name="syncEvents"
+              value={data.syncEvents}
+              onChange={onSyncEventChange}
+              data-test-id="syncEvents"
+              testId="syncEvent"
+            />
+          </div>
+          <div>
+            <Typography variant="caption">
+              <FormattedMessage {...messages.asynchronousEvents} />
+            </Typography>
+            <VerticalSpacer />
+            <Typography variant="body1">
+              <FormattedMessage
+                {...messages.assignPermissionsToAsynchronousEvents}
+              />
+            </Typography>
+            <VerticalSpacer />
+            <MultiAutocompleteSelectField
+              displayValues={mapAsyncEventsToChoices(
+                data.asyncEvents,
+                data.asyncEvents,
+              )}
+              label={intl.formatMessage(messages.registeredEvents)}
+              choices={asyncEventsChoices}
+              name="asyncEvents"
+              value={data.asyncEvents}
+              onChange={onAsyncEventChange}
+              data-test-id="asyncEvents"
+              testId="asyncEvent"
+            />
+          </div>
+        </Grid>
       </CardContent>
     </Card>
   );

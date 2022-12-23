@@ -2,7 +2,6 @@ import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import WebhookEvents from "@saleor/custom-apps/components/WebhookEvents";
@@ -26,7 +25,8 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
+import { parse, print } from "graphql";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery/WebhookSubscriptionQuery";
@@ -64,6 +64,13 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  let prettified: string;
+  try {
+    prettified = print(parse(webhook?.subscriptionQuery));
+  } catch {
+    prettified = webhook?.subscriptionQuery || "";
+  }
+
   const initialForm: WebhookFormData = {
     syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
     asyncEvents: webhook?.asyncEvents?.map(event => event.eventType) || [],
@@ -71,13 +78,23 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     name: webhook?.name || "",
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
-    subscriptionQuery: webhook?.subscriptionQuery || "",
+    subscriptionQuery: prettified || "",
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
 
+  const [query, setQuery] = useState(prettified);
+
+  useEffect(() => {
+    setQuery(prettified);
+  }, [prettified]);
+
+  const handleSubmit = (data: WebhookFormData) => {
+    onSubmit({ ...data, ...{ subscriptionQuery: query } });
+  };
+
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ data, submit, change }) => {
         const syncEventsChoices = disabled
           ? []
@@ -96,43 +113,36 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
           change,
           data.asyncEvents,
+          query,
+          setQuery,
         );
 
         return (
           <Container>
             <Backlink href={backUrl}>{appName}</Backlink>
-            <PageHeader title={getHeaderTitle(intl, webhook)} />
-            <Grid variant="uniform">
-              <div>
-                <WebhookInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <WebhookStatus
-                  data={data.isActive}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <FormSpacer />
-                <WebhookEvents
-                  data={data}
-                  syncEventsChoices={syncEventsChoices}
-                  asyncEventsChoices={asyncEventsChoices}
-                  onSyncEventChange={handleSyncEventsSelect}
-                  onAsyncEventChange={handleAsyncEventsSelect}
-                />
-              </div>
-            </Grid>
-            <FormSpacer />
-            <WebhookSubscriptionQuery
+            <PageHeader title={getHeaderTitle(intl, webhook)}>
+              <WebhookStatus
+                data={data.isActive}
+                disabled={disabled}
+                onChange={change}
+              />
+            </PageHeader>
+            <WebhookInfo
               data={data}
-              onChange={change}
+              disabled={disabled}
               errors={errors}
+              onChange={change}
             />
+            <FormSpacer />
+            <WebhookEvents
+              data={data}
+              syncEventsChoices={syncEventsChoices}
+              asyncEventsChoices={asyncEventsChoices}
+              onSyncEventChange={handleSyncEventsSelect}
+              onAsyncEventChange={handleAsyncEventsSelect}
+            />
+            <FormSpacer />
+            <WebhookSubscriptionQuery query={query} setQuery={setQuery} />
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
