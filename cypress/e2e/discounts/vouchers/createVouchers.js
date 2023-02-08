@@ -70,7 +70,6 @@ describe("As an admin I want to create voucher", () => {
     cy.clearSessionData().loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
-      pricesEnteredWithTax: true,
     });
   });
   it(

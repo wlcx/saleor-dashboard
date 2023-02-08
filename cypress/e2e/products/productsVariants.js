@@ -55,7 +55,6 @@ describe("As an admin I should be able to create variant", () => {
         newChannel = resp;
         updateTaxConfigurationForChannel({
           channelSlug: newChannel.slug,
-          pricesEnteredWithTax: true,
         });
       });
     cy.checkIfDataAreNotNull({

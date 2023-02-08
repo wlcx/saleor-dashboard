@@ -64,7 +64,6 @@ describe("As an admin I want to update vouchers", () => {
     cy.clearSessionData().loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
-      pricesEnteredWithTax: true,
     });
   });
   it(
