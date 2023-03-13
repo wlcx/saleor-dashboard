@@ -46,6 +46,7 @@ import {
   ProductListFilterOpts,
 } from "./filters";
 import { getAttributeColumnValue } from "./utils";
+import { ProductFilters } from "@dashboard/components/ProductFilters";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -256,6 +257,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         </LimitReachedAlert>
       )}
       <Card>
+        <ProductFilters />
+
         <FilterBar
           currencySymbol={currencySymbol}
           currentTab={currentTab}

@@ -362,6 +362,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts,
   );
 
+  console.log("filterOpts", filterOpts)
+
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,

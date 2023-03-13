@@ -1,5 +1,6 @@
 import { Button } from "@dashboard/components/Button";
-import { makeStyles } from "@saleor/macaw-ui";
+import { LayoutButton, makeStyles } from "@saleor/macaw-ui";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -8,7 +9,7 @@ import Filter from "../Filter";
 import { FilterErrorMessages, IFilter } from "../Filter/types";
 import { SearchBarProps } from "../SearchBar";
 import SearchInput from "../SearchBar/SearchInput";
-import FilterTabs, { FilterTab } from "../TableFilter";
+
 
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
@@ -57,7 +58,6 @@ const FilterBar: React.FC<FilterBarProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-
   const isCustom = currentTab === tabs.length + 1;
   const displayTabAction = isCustom
     ? "save"
@@ -67,25 +67,6 @@ const FilterBar: React.FC<FilterBarProps> = props => {
 
   return (
     <>
-      <FilterTabs currentTab={currentTab}>
-        <FilterTab label={allTabLabel} onClick={onAll} />
-        {tabs.map((tab, tabIndex) => (
-          <FilterTab
-            onClick={() => onTabChange(tabIndex + 1)}
-            label={tab}
-            key={tabIndex}
-          />
-        ))}
-        {isCustom && (
-          <FilterTab
-            onClick={() => undefined}
-            label={intl.formatMessage({
-              id: "qIgdO6",
-              defaultMessage: "Custom Filter",
-            })}
-          />
-        )}
-      </FilterTabs>
       <div className={classes.root}>
         <Filter
           errorMessages={errorMessages}
