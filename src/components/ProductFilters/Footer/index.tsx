@@ -18,15 +18,11 @@ const FooterContainer = ({ children }) => (
 
 
 export const Footer = () => {
-  const { dispatch } = useFilterContext()
-
-  const handleAddFilter = () => {
-    dispatch({ type: "ADD_EMPTY" })
-  }
+  const { addEmptyExpression } = useFilterContext()
 
   return (
     <FooterContainer>
-      <Button variant="secondary" onClick={handleAddFilter}>Add filter</Button>
+      <Button variant="secondary" onClick={addEmptyExpression}>Add filter</Button>
       <Box display="flex">
         <Button variant="tertiary">Clear filters</Button>
         <Button >Show results</Button>

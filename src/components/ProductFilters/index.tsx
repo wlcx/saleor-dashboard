@@ -13,16 +13,20 @@ const FilterExpressions = () => {
 
   console.log("current:", filters)
 
-  return filters.map(filter => {
+  return (
+    <>
+      {filters.map(filter => {
 
-    return (
-      <Groups.Item asWhere>
-        {isExpression(filter) && (
-          <ExpressionContainer expression={filter} />
-        )}
-      </Groups.Item>
-    )
-  })
+        return (
+          <Groups.Item asWhere>
+            {isExpression(filter) && (
+              <ExpressionContainer expression={filter} />
+            )}
+          </Groups.Item>
+        )
+      })}
+    </>
+  )
 }
 
 

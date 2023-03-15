@@ -2,17 +2,18 @@ import { Expression } from "@saleor/macaw-ui/next"
 import React from "react"
 import { FilterExpression } from "./../State/reducer"
 import { OperandFactory } from "./OperandFactory"
+import { FilterKindDropdown } from "./FilterKindDropdown"
 
 interface ExpressionContainerProps {
   expression: FilterExpression
 }
 
 export const ExpressionContainer = ({ expression }: ExpressionContainerProps) => {
-  const { leftOperand, rightOperand, condition } = expression
+  const { rightOperand, filterKind, condition } = expression
 
   return (
     <Expression>
-      <OperandFactory operand={leftOperand} />
+      <FilterKindDropdown filterKind={filterKind} />
       <Expression.Condition currentConditon={condition.selected}>
         {condition.choices.map(cnd => (
           <Expression.ConditionItem key={cnd}>{cnd}</Expression.ConditionItem>

@@ -9056,6 +9056,13 @@ export type InitialProductFilterCategoriesQueryVariables = Exact<{
 
 export type InitialProductFilterCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
 
+export type AutocompleteFiltersCategoriesQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AutocompleteFiltersCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
+
 export type InitialProductFilterCollectionsQueryVariables = Exact<{
   collections?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;

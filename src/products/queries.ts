@@ -28,6 +28,19 @@ export const initialProductFilterCategoriesQuery = gql`
   }
 `;
 
+export const autocompleteFiltersCategoriesQuery = gql`
+  query AutocompleteFiltersCategories($search: String) {
+    categories(first: 30, filter: { search: $search }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
 export const initialProductFilterCollectionsQuery = gql`
   query InitialProductFilterCollections($collections: [ID!]) {
     collections(first: 100, filter: { ids: $collections }) {

@@ -12,68 +12,89 @@ const LogicOperator = {
 } as const
 
 
-type Value = {
+export type Value = {
   id: string
   name: string
   displayName: string
+  dataType: string
 }
 
-type DropdownOperand<T extends string> =
+type DropdownOperand =
   | {
-    type: T,
+    type: "dropdown",
+    dataType: string,
     selected: Value,
     isLoading: true
   }
   | {
-    type: T,
+    type: "dropdown_loading",
+    dataType: string,
     selected: Value,
     isLoading: false
     choices: Value[]
   };
 
 
-
-type AutocompleteOperand<T extends string> =
-  {
-    type: T,
-    selected: Value[],
-    typedPhase: string,
-    isLoading: true
-  } |
-  {
-    type: T,
-    selected: Value[],
-    isLoading: false
-    choices: Value[]
-  };
+export type AutocompleteOperand = {
+  type: "autocomplete",
+  dataType: string,
+  selected: Value[],
+  typedPhase: string,
+}
 
 
-type RangeOperand<T extends string> = {
-  type: T,
+
+
+// type AutocompleteOperand =
+//   {
+//     type: "autocomplete",
+//     dataType: string,
+//     selected: Value[],
+//     typedPhase: string,
+//     isLoading: true
+//   } |
+//   {
+//     type: "autocomplete_loading",
+//     dataType: string,
+//     selected: Value[],
+//     isLoading: false
+//     choices: Value[]
+//   };
+
+
+type RangeOperand = {
+  type: "range",
+  dataType: string,
   sign?: string
   left: number
   right: number
 }
 
-type TextOperand<T extends string> = {
-  type: T
+type TextOperand = {
+  type: "text"
+  dataType: string,
   value: string
 };
 
-type NumberOperand<T extends string> = {
-  type: T,
+type NumberOperand = {
+  type: "number",
+  dataType: string,
   value: number
 };
 
 export type Operand =
-  | DropdownOperand<"category">
-  | AutocompleteOperand<"collections">
-  | RangeOperand<"price">
-  | TextOperand<"query">
-  | NumberOperand<"size">
+  | DropdownOperand
+  | AutocompleteOperand
+  | RangeOperand
+  | TextOperand
+  | NumberOperand
+
+export type FilterKind = {
+  selected: Value
+}
 
 export interface FilterExpression {
-  leftOperand: Operand
+  filterKind: FilterKind
   rightOperand: Operand
   condition: {
     selected: LiteralUnion<typeof ConditionOperator>
@@ -95,22 +116,39 @@ export const isConditionOperator = (x: any): x is LiteralUnion<typeof ConditionO
   return Object.values(ConditionOperator).includes(x)
 }
 
+const getRightOperandByKind = (kindValue: Value): Operand => {
+  if (kindValue.dataType === "category") {
+    return {
+      type: "autocomplete",
+      dataType: kindValue.dataType,
+      selected: [],
+      typedPhase: "",
+    }
+  }
+
+  if (kindValue.dataType.includes("attr:")) {
+    const attrInputType = kindValue.dataType.split(":")[1]
+
+    console.log("attrInputType", attrInputType)
+  }
+
+  return {
+    type: "text",
+    dataType: "product-type",
+    value: ""
+  }
+}
 
 export const filterReducer = (state: FilterState, action) => {
   switch (action.type) {
     case "ADD_EMPTY":
       return state.concat([{
-        leftOperand: {
-          type: "category",
-          selected: { id: "product-type", name: "product-type", displayName: "Product type" },
-          isLoading: false,
-          choices: [
-            { id: "category", name: "category", displayName: "Category" },
-            { id: "channels", name: "channels", displayName: "Channels" }
-          ]
+        filterKind: {
+          selected: { id: "product-type", name: "product-type", displayName: "Product type", dataType: "product-type" },
         },
         rightOperand: {
-          type: "query",
+          type: "text",
+          dataType: "product-type",
           value: ""
         },
         condition: {
@@ -118,6 +156,21 @@ export const filterReducer = (state: FilterState, action) => {
           choices: Object.values(ConditionOperator)
         }
       }])
+    case "CHANGE_FILTER_KIND":
+      return state.map((item) => {
+        if (isExpression(item) && item.filterKind === action.payload.currentKind) {
+          return {
+            ...item,
+            filterKind: {
+              selected: action.payload.newValue
+            },
+            rightOperand: getRightOperandByKind(action.payload.newValue)
+          }
+        }
+
+        return item
+      })
+      
     default:
       return state
   }
