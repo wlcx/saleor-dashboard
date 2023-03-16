@@ -1,10 +1,11 @@
 import { useContext, createContext } from "react";
-import { FilterKind, FilterState, Value } from "./reducer";
+import { FilterKind, FilterState, Operand, Value } from "./reducer";
 
 interface FilterContextState {
   filters: FilterState,
   addEmptyExpression: () => void
   changeFilterKind: (currentKind: FilterKind, newValue: Value) => void
+  changeRightOperand: (operand: Operand, newValue: Value) => void
 }
 
 export const FilterContext = createContext<FilterContextState>(null)

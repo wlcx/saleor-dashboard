@@ -43,25 +43,6 @@ export type AutocompleteOperand = {
 }
 
 
-
-
-// type AutocompleteOperand =
-//   {
-//     type: "autocomplete",
-//     dataType: string,
-//     selected: Value[],
-//     typedPhase: string,
-//     isLoading: true
-//   } |
-//   {
-//     type: "autocomplete_loading",
-//     dataType: string,
-//     selected: Value[],
-//     isLoading: false
-//     choices: Value[]
-//   };
-
-
 type RangeOperand = {
   type: "range",
   dataType: string,
@@ -170,6 +151,8 @@ export const filterReducer = (state: FilterState, action) => {
 
         return item
       })
+    case "CHANGE_RIGHT_OPERAND":
+      return state
       
     default:
       return state

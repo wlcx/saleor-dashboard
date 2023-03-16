@@ -1,9 +1,10 @@
 import { Expression } from "@saleor/macaw-ui/next"
-import React, { ChangeEvent, useState } from "react"
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react"
 import { AutocompleteOperand, FilterExpression, Operand, Value } from "./../State/reducer"
 import { useFilterContext } from "../State/context"
 import { useAutocompleteFiltersCategoriesLazyQuery, useAutocompleteFiltersCategoriesQuery } from "@dashboard/graphql"
 import { mapCategories } from "../State/maps"
+import { useTokenizedValue } from "../State/hooks"
 
 
 interface OperandFactoryProps {
@@ -24,34 +25,56 @@ const AttributeBooleanOperand = () => { }
 const AttributeDropdownOperand = () => { }
 
 
-const CategoryOperand = ({ operand }: { operand: AutocompleteOperand }) => {
-  const [value, setValue] = useState("");
-  const [open, setOpen] = useState(false);
 
-  const handleKeyDown = () => setOpen(true);
+const CategoryOperand = ({ operand }: { operand: AutocompleteOperand }) => {
+  const {
+    value,
+    changeAt,
+    change,
+    input,
+    keyDown,
+    clean,
+    tokens,
+    selected
+  } = useTokenizedValue("")
+  const context = useFilterContext()
+  const [open, setOpen] = useState(false);
+  const [load, { loading, data }] = useAutocompleteFiltersCategoriesLazyQuery();
+  const categories = data ? data.categories.edges.map(mapCategories) : []
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    keyDown(event);
+    setOpen(true);
+  }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const search = event.target.value
-    setValue(event.target.value);
-    load({ variables: { search }})
+    change(event);
+    load({ variables: { search: input }})
   };
 
   const handleClickItem = (category: Value) => {
-    console.log("clicked value", category)
+    changeAt(category)
     setOpen(false);
   };
-  
-  const [load, { loading, data }] = useAutocompleteFiltersCategoriesLazyQuery();
- 
-  const categories = data ? data.categories.edges.map(mapCategories) : []
 
-  console.log("categories loaded: ", data)
+  const handleClickOutside = () => {
+    clean();
+    setOpen(false);
+  }
+  
+  useEffect(() => {
+
+    console.log("selected", tokens, selected)
+  }, [tokens])
+
+
 
   return (
     <Expression.OperandAutocomplete
       open={open}
       placeholder="Set category"
       value={value}
+      onClickOutside={handleClickOutside}
       onKeyDown={handleKeyDown}
       onChange={handleChange}
     >
