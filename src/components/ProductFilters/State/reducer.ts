@@ -107,6 +107,15 @@ const getRightOperandByKind = (kindValue: Value): Operand => {
     }
   }
 
+  if (kindValue.dataType === "channel") {
+    return {
+      type: "autocomplete",
+      dataType: kindValue.dataType,
+      selected: [],
+      typedPhase: "",
+    }
+  }
+
   if (kindValue.dataType.includes("attr:")) {
     const attrInputType = kindValue.dataType.split(":")[1]
 
@@ -152,7 +161,19 @@ export const filterReducer = (state: FilterState, action) => {
         return item
       })
     case "CHANGE_RIGHT_OPERAND":
-      return state
+      return state.map((item) => {
+        if (isExpression(item) && item.rightOperand === action.payload.operand) {
+          return {
+            ...item,
+            rightOperand: {
+              ...item.rightOperand,
+              selected: action.payload.newValues
+            }
+          }
+        }
+
+        return item
+      })
       
     default:
       return state

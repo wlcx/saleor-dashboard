@@ -13,8 +13,8 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: "ADD_EMPTY" })
   }
 
-  const changeRightOperand = (operand: Operand, newValue: Value) => {
-    dispatch({ type: "CHANGE_RIGHT_OPERAND", payload: { operand, newValue } })
+  const changeRightOperand = (operand: Operand, newValues: Value[]) => {
+    dispatch({ type: "CHANGE_RIGHT_OPERAND", payload: { operand, newValues } })
   }
 
   return (

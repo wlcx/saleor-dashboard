@@ -11,7 +11,7 @@ interface ExpressionContainerProps {
 
 const staticChoices = [
   { id: "category", name: "category", displayName: "Category", dataType: "category" },
-  { id: "channels", name: "channels", displayName: "Channels", dataType: "channels" },
+  { id: "channel", name: "channel", displayName: "Channel", dataType: "channel" },
   { id: "product-type", name: "product-type", displayName: "Product type", dataType: "product-type" },
   { id: "price", name: "price", displayName: "Price", dataType: "price" },
   { id: "collection", name: "collection", displayName: "Collection", dataType: "collection" },

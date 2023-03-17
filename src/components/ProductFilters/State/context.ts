@@ -5,7 +5,7 @@ interface FilterContextState {
   filters: FilterState,
   addEmptyExpression: () => void
   changeFilterKind: (currentKind: FilterKind, newValue: Value) => void
-  changeRightOperand: (operand: Operand, newValue: Value) => void
+  changeRightOperand: (operand: Operand, newValues: Value[]) => void
 }
 
 export const FilterContext = createContext<FilterContextState>(null)
