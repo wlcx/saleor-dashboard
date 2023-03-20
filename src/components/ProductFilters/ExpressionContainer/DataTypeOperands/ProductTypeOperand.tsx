@@ -1,27 +1,34 @@
-import React from "react"
-import { useAutocompleteFiltersProductTypesLazyQuery } from "@dashboard/graphql"
-import { toProductTypeValue } from "./../../State/maps"
-import { Autocomplete } from "./../Autocomplete"
-import { useFilterContext } from "../../State/context"
-import { AutocompleteOperand, Value } from "../../State/types"
+import { useAutocompleteFiltersProductTypesLazyQuery } from "@dashboard/graphql";
+import React from "react";
 
-export const ProductTypeOperand = ({ operand }: { operand: AutocompleteOperand }) => {
-  const context = useFilterContext()
-  const [load, { loading, data }] = useAutocompleteFiltersProductTypesLazyQuery()
-  const productTypes = data ? data.productTypes.edges.map(toProductTypeValue) : []
+import { useFilterContext } from "../../State/context";
+import { AutocompleteOperand, Value } from "../../State/types";
+import { toProductTypeValue } from "./../../State/maps";
+import { Autocomplete } from "./../Autocomplete";
 
-  const handleChange = (search) => {
+export const ProductTypeOperand = ({
+  operand,
+}: {
+  operand: AutocompleteOperand;
+}) => {
+  const context = useFilterContext();
+  const [load, { data }] = useAutocompleteFiltersProductTypesLazyQuery();
+  const productTypes = data
+    ? data.productTypes.edges.map(toProductTypeValue)
+    : [];
+
+  const handleChange = search => {
     load({
       variables: {
         first: 10,
-        search
-      }
-    })
-  }
+        search,
+      },
+    });
+  };
 
   const handleSelect = (operand: AutocompleteOperand, selected: Value[]) => {
-    context.changeAutocompleteOperand(operand, selected)
-  }
+    context.changeAutocompleteOperand(operand, selected);
+  };
 
   return (
     <Autocomplete
@@ -31,5 +38,5 @@ export const ProductTypeOperand = ({ operand }: { operand: AutocompleteOperand }
       onChange={handleChange}
       items={productTypes}
     />
-  )
-}
+  );
+};

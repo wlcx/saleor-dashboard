@@ -1,28 +1,32 @@
-import React from "react"
-import { useAutocompleteFiltersCollectionsLazyQuery } from "@dashboard/graphql"
-import { toCollectionValue } from "./../../State/maps"
-import { Autocomplete } from "./../Autocomplete"
-import { useFilterContext } from "../../State/context"
-import { AutocompleteOperand, Value } from "../../State/types"
+import { useAutocompleteFiltersCollectionsLazyQuery } from "@dashboard/graphql";
+import React from "react";
 
-export const CollectionOperand = ({ operand }: { operand: AutocompleteOperand }) => {
-  const context = useFilterContext()
-  const [load, { loading, data }] = useAutocompleteFiltersCollectionsLazyQuery();
-  const collections = data ? data.collections.edges.map(toCollectionValue) : []
+import { useFilterContext } from "../../State/context";
+import { AutocompleteOperand, Value } from "../../State/types";
+import { toCollectionValue } from "./../../State/maps";
+import { Autocomplete } from "./../Autocomplete";
 
-  const handleChange = (search) => {
+export const CollectionOperand = ({
+  operand,
+}: {
+  operand: AutocompleteOperand;
+}) => {
+  const context = useFilterContext();
+  const [load, { data }] = useAutocompleteFiltersCollectionsLazyQuery();
+  const collections = data ? data.collections.edges.map(toCollectionValue) : [];
+
+  const handleChange = search => {
     load({
       variables: {
         first: 10,
-        search
-      }
-    })
-  }
+        search,
+      },
+    });
+  };
 
   const handleSelect = (operand: AutocompleteOperand, selected: Value[]) => {
-    context.changeAutocompleteOperand(operand, selected)
-  }
-
+    context.changeAutocompleteOperand(operand, selected);
+  };
 
   return (
     <Autocomplete
@@ -32,5 +36,5 @@ export const CollectionOperand = ({ operand }: { operand: AutocompleteOperand })
       onChange={handleChange}
       items={collections}
     />
-  )
-}
+  );
+};

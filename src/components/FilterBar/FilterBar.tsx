@@ -1,8 +1,7 @@
 import { Button } from "@dashboard/components/Button";
-import { LayoutButton, makeStyles } from "@saleor/macaw-ui";
-
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { FilterProps } from "../../types";
 import Filter from "../Filter";
@@ -10,18 +9,19 @@ import { FilterErrorMessages, IFilter } from "../Filter/types";
 import { SearchBarProps } from "../SearchBar";
 import SearchInput from "../SearchBar/SearchInput";
 
-
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
     SearchBarProps {
   errorMessages?: FilterErrorMessages<TKeys>;
   filterStructure: IFilter<TKeys>;
+  withoutBorder?: boolean;
 }
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<{ withoutBorder?: boolean }>(
   theme => ({
     root: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
+      borderBottom: props =>
+        props.withoutBorder ? "none" : `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
       padding: theme.spacing(1, 4),
@@ -39,25 +39,21 @@ const useStyles = makeStyles(
 
 const FilterBar: React.FC<FilterBarProps> = props => {
   const {
-    allTabLabel,
     currencySymbol,
     filterStructure,
     currentTab,
     initialSearch,
     searchPlaceholder,
     tabs,
-    onAll,
     onSearchChange,
     onFilterChange,
     onFilterAttributeFocus,
-    onTabChange,
     onTabDelete,
     onTabSave,
     errorMessages,
   } = props;
 
   const classes = useStyles(props);
-  const intl = useIntl();
   const isCustom = currentTab === tabs.length + 1;
   const displayTabAction = isCustom
     ? "save"

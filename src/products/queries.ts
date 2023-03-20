@@ -42,12 +42,12 @@ export const autocompleteFiltersCategoriesQuery = gql`
 `;
 
 export const autocompleteFiltersProductTypesQuery = gql`
-  query AutocompleteFiltersProductTypes($first: Int!, $after: String, $search: String) {
-    productTypes(
-      after: $after
-      first: $first
-      filter: { search: $search }
-    ) {
+  query AutocompleteFiltersProductTypes(
+    $first: Int!
+    $after: String
+    $search: String
+  ) {
+    productTypes(after: $after, first: $first, filter: { search: $search }) {
       edges {
         node {
           id
@@ -59,12 +59,12 @@ export const autocompleteFiltersProductTypesQuery = gql`
 `;
 
 export const autocompleteFiltersCollectionsQuery = gql`
-  query AutocompleteFiltersCollections($first: Int!, $after: String, $search: String) {
-    collections(
-      after: $after
-      first: $first
-      filter: { search: $search }
-    ) {
+  query AutocompleteFiltersCollections(
+    $first: Int!
+    $after: String
+    $search: String
+  ) {
+    collections(after: $after, first: $first, filter: { search: $search }) {
       edges {
         node {
           id
@@ -126,6 +126,7 @@ export const productListQuery = gql`
         node {
           ...ProductWithChannelListings
           updatedAt
+          description
           attributes @include(if: $hasSelectedAttributes) {
             ...ProductListAttribute
           }
