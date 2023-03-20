@@ -1,4 +1,4 @@
-import { Button, Dropdown } from "@saleor/macaw-ui/next"
+import { Dropdown, DropdownButton } from "@saleor/macaw-ui/next"
 import React from "react"
 import { Groups } from "./Groups"
 import { Footer } from "./Footer"
@@ -7,6 +7,7 @@ import { FilterProvider } from "./State/provider"
 import { useFilterContext } from "./State/context"
 import { ExpressionContainer } from "./ExpressionContainer"
 import { isExpression } from "./State/guards"
+import { FormattedMessage } from "react-intl"
 
 const FilterExpressions = () => {
   const { filters } = useFilterContext()
@@ -35,7 +36,13 @@ export const ProductFilters = () => {
     <FilterProvider>
       <Dropdown>
         <Dropdown.Trigger>
-          <Button variant="tertiary">Filters</Button>
+          <DropdownButton data-test-id="show-filters-button">
+            <FormattedMessage
+              id="FNpv6K"
+              defaultMessage="Filters"
+              description="button"
+            />
+          </DropdownButton>
         </Dropdown.Trigger>
         <Content>
           <Groups>

@@ -10,9 +10,8 @@ import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
-
-import { FilterButton } from "./FilterButton";
 import { getSelectedFilterAmount } from "./utils";
+import { ProductFilters } from "@dashboard/components/ProductFilters";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
@@ -34,11 +33,11 @@ export const Filter = ({
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);
 
-  const isFilterActive = menu.some(filterElement => filterElement.active);
-  const selectedFilterAmount = useMemo(
-    () => getSelectedFilterAmount(menu, data),
-    [data, menu],
-  );
+  // const isFilterActive = menu.some(filterElement => filterElement.active);
+  // const selectedFilterAmount = useMemo(
+  //   () => getSelectedFilterAmount(menu, data),
+  //   [data, menu],
+  // );
 
   const handleSubmit = () => {
     const invalidFilters = extractInvalidFilters(data, menu);
@@ -68,11 +67,7 @@ export const Filter = ({
       mouseEvent="onMouseUp"
     >
       <div ref={anchor}>
-        <FilterButton
-          isFilterActive={isFilterActive}
-          onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
-          selectedFilterAmount={selectedFilterAmount}
-        />
+        <ProductFilters />
         <Popper
           className={sprinkles({
             backgroundColor: "surfaceNeutralPlain",
