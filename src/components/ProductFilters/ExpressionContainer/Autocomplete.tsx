@@ -1,18 +1,18 @@
 
 import { Expression } from "@saleor/macaw-ui/next"
 import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react"
-import { AutocompleteOperand, Value } from "./../State/reducer"
-import { useFilterContext } from "../State/context"
 import { useTokenizedValue } from "../State/hooks"
+import { AutocompleteOperand, Value } from "../State/types"
 
 interface AutocompleteProps {
   operand: AutocompleteOperand
   placeholder: string
   items: Value[]
   onChange: (searchInput: string) => void
+  onSelect: (operand: AutocompleteOperand, selected: Value[]) => void
 }
 
-export const Autocomplete = ({ operand, items, placeholder, onChange }: AutocompleteProps) => {
+export const Autocomplete = ({ operand, items, placeholder, onChange, onSelect }: AutocompleteProps) => {
   const {
     value,
     changeAt,
@@ -22,7 +22,6 @@ export const Autocomplete = ({ operand, items, placeholder, onChange }: Autocomp
     clean,
     selected
   } = useTokenizedValue("")
-  const context = useFilterContext()
   const [open, setOpen] = useState(false);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -32,7 +31,6 @@ export const Autocomplete = ({ operand, items, placeholder, onChange }: Autocomp
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     change(event);
-    onChange(input)
   };
 
   const handleClickItem = (item: Value) => {
@@ -48,9 +46,14 @@ export const Autocomplete = ({ operand, items, placeholder, onChange }: Autocomp
   useEffect(() => {
     if (!selected.length) return
 
-    context.changeRightOperand(operand, selected)
+    onSelect(operand, selected)
   }, [selected])
 
+  useEffect(() => {
+    if (!input) return
+
+    onChange(input)
+  }, [input])
 
   return (
     <Expression.OperandAutocomplete

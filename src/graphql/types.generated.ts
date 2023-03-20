@@ -9063,6 +9063,24 @@ export type AutocompleteFiltersCategoriesQueryVariables = Exact<{
 
 export type AutocompleteFiltersCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
 
+export type AutocompleteFiltersProductTypesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AutocompleteFiltersProductTypesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }> } | null };
+
+export type AutocompleteFiltersCollectionsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AutocompleteFiltersCollectionsQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null };
+
 export type InitialProductFilterCollectionsQueryVariables = Exact<{
   collections?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;

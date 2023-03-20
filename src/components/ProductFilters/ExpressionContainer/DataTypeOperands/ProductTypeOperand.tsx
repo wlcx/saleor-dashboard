@@ -1,17 +1,22 @@
 import React from "react"
-import { useAutocompleteFiltersCategoriesLazyQuery } from "@dashboard/graphql"
-import { toCategoryValue } from "./../../State/maps"
+import { useAutocompleteFiltersProductTypesLazyQuery } from "@dashboard/graphql"
+import { toProductTypeValue } from "./../../State/maps"
 import { Autocomplete } from "./../Autocomplete"
 import { useFilterContext } from "../../State/context"
 import { AutocompleteOperand, Value } from "../../State/types"
 
-export const CategoryOperand = ({ operand }: { operand: AutocompleteOperand }) => {
+export const ProductTypeOperand = ({ operand }: { operand: AutocompleteOperand }) => {
   const context = useFilterContext()
-  const [load, { loading, data }] = useAutocompleteFiltersCategoriesLazyQuery();
-  const categories = data ? data.categories.edges.map(toCategoryValue) : []
+  const [load, { loading, data }] = useAutocompleteFiltersProductTypesLazyQuery()
+  const productTypes = data ? data.productTypes.edges.map(toProductTypeValue) : []
 
   const handleChange = (search) => {
-    load({ variables: { search }})
+    load({
+      variables: {
+        first: 10,
+        search
+      }
+    })
   }
 
   const handleSelect = (operand: AutocompleteOperand, selected: Value[]) => {
@@ -24,7 +29,7 @@ export const CategoryOperand = ({ operand }: { operand: AutocompleteOperand }) =
       operand={operand}
       placeholder="Set category"
       onChange={handleChange}
-      items={categories}
+      items={productTypes}
     />
   )
 }

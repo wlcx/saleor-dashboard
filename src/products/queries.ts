@@ -41,6 +41,40 @@ export const autocompleteFiltersCategoriesQuery = gql`
   }
 `;
 
+export const autocompleteFiltersProductTypesQuery = gql`
+  query AutocompleteFiltersProductTypes($first: Int!, $after: String, $search: String) {
+    productTypes(
+      after: $after
+      first: $first
+      filter: { search: $search }
+    ) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+export const autocompleteFiltersCollectionsQuery = gql`
+  query AutocompleteFiltersCollections($first: Int!, $after: String, $search: String) {
+    collections(
+      after: $after
+      first: $first
+      filter: { search: $search }
+    ) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
 export const initialProductFilterCollectionsQuery = gql`
   query InitialProductFilterCollections($collections: [ID!]) {
     collections(first: 100, filter: { ids: $collections }) {

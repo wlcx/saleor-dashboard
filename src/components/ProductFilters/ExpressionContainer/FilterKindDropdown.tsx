@@ -1,15 +1,15 @@
 import { Expression, Box } from "@saleor/macaw-ui/next"
 import React from "react"
-import { FilterKind, Value } from "./../State/reducer"
 import { useFilterContext } from "../State/context"
 import { useInitialProductFilterAttributesQuery } from "@dashboard/graphql"
-import { mapAttributes } from "../State/maps"
+import { toAttributeValue } from "../State/maps"
+import { FilterKind, Value } from "../State/types"
 
 interface ExpressionContainerProps {
   filterKind: FilterKind
 }
 
-const staticChoices = [
+const staticChoices: Value[] = [
   { id: "category", name: "category", displayName: "Category", dataType: "category" },
   { id: "channel", name: "channel", displayName: "Channel", dataType: "channel" },
   { id: "product-type", name: "product-type", displayName: "Product type", dataType: "product-type" },
@@ -21,7 +21,7 @@ const staticChoices = [
 const useFilterKindOptions = () => {
   const { data: attributesData, loading: attributesLoading } = useInitialProductFilterAttributesQuery();
 
-  const attributeValues = attributesData.attributes.edges.map(mapAttributes)
+  const attributeValues = attributesData.attributes.edges.map(toAttributeValue)
 
   const loading = attributesLoading
   const choices = staticChoices.concat(attributeValues)

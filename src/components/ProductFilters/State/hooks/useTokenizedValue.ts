@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react"
-import { Value } from "../reducer"
+import { Value } from "../types"
 
 interface Token {
   isDirty: boolean
@@ -110,25 +110,29 @@ export const useTokenizedValue = (initial: string) => {
   }
 
   const change = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value: newValue, selectionStart} = event.target
-    const newTokens = generateDirtyTokens(markEditionPlace(newValue, selectionStart))
+    setTokenizedState((currentState) => {      
+      const { value: newValue, selectionStart} = event.target
+      const newTokens = generateDirtyTokens(markEditionPlace(newValue, selectionStart))
 
-    setTokenizedState({
-      stringValue: newValue,
-      tokens: newTokens,
-      selected: tokenizedState.selected
+      return {
+        stringValue: newValue,
+        tokens: newTokens,
+        selected: currentState.selected
+      }
     })
   }
 
   const changeAt = (item: Value) => {
-    const newTokens = cleanDirtyToken(tokenizedState.tokens, item.displayName)
-    const tokenValues = obtainTokenValues(newTokens)
-    const newValue = generateValueFromTokens(tokenValues)
+    setTokenizedState((currentState) => {
+      const newTokens = cleanDirtyToken(currentState.tokens, item.displayName)
+      const tokenValues = obtainTokenValues(newTokens)
+      const newValue = generateValueFromTokens(tokenValues)
 
-    setTokenizedState({
-      stringValue: newValue,
-      tokens: newTokens,
-      selected: tokenizedState.selected.concat(item)
+      return {
+        stringValue: newValue,
+        tokens: newTokens,
+        selected: currentState.selected.concat(item)
+      }
     })
   }
 

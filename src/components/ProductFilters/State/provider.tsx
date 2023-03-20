@@ -1,6 +1,7 @@
 import React, { useReducer } from "react"
 import { FilterContext } from "./context"
-import { FilterKind, Operand, Value, filterReducer } from "./reducer"
+import { AutocompleteOperand, Condition, ConditionValue, DropdownOperand, FilterKind, NumberOperand, RangeOperand, TextOperand, Value } from "./types"
+import { filterReducer } from "./reducer"
 
 export const FilterProvider = ({ children }) => {
   const [filters, dispatch] = useReducer(filterReducer, [])
@@ -13,8 +14,28 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: "ADD_EMPTY" })
   }
 
-  const changeRightOperand = (operand: Operand, newValues: Value[]) => {
-    dispatch({ type: "CHANGE_RIGHT_OPERAND", payload: { operand, newValues } })
+  const changeDropdownOperand = (operand: DropdownOperand, newValue: Value) => {
+    dispatch({ type: "CHANGE_DROPDOWN", payload: { operand, newValue } })
+  }
+
+  const changeAutocompleteOperand = (operand: AutocompleteOperand, newValues: Value[]) => {
+    dispatch({ type: "CHANGE_AUTOCOMPLETE", payload: { operand, newValues } })
+  }
+
+  const changeRangeOperand = (operand: RangeOperand, leftValue: number, rightValue: number) => {
+    dispatch({ type: "CHANGE_RANGE", payload: { operand, leftValue, rightValue } })
+  }
+
+  const changeNumberOperand = (operand: NumberOperand, newValue: number) => {
+    dispatch({ type: "CHANGE_NUMBER", payload: { operand, newValue } })
+  }
+
+  const changeTextOperand = (operand: TextOperand, newValue: string) => {
+    dispatch({ type: "CHANGE_TEXT", payload: { operand, newValue } })
+  }
+
+  const changeCondition = (currentConditon: Condition, newValue: ConditionValue) => {
+    dispatch({ type: "CHANGE_CONDITION", payload: { currentConditon, newValue } })
   }
 
   return (
@@ -22,7 +43,12 @@ export const FilterProvider = ({ children }) => {
       filters,
       changeFilterKind,
       addEmptyExpression,
-      changeRightOperand
+      changeCondition,
+      changeDropdownOperand,
+      changeAutocompleteOperand,
+      changeRangeOperand,
+      changeNumberOperand,
+      changeTextOperand
     }}>
       {children}
     </FilterContext.Provider>

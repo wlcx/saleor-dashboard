@@ -12628,6 +12628,90 @@ export function useAutocompleteFiltersCategoriesLazyQuery(baseOptions?: ApolloRe
 export type AutocompleteFiltersCategoriesQueryHookResult = ReturnType<typeof useAutocompleteFiltersCategoriesQuery>;
 export type AutocompleteFiltersCategoriesLazyQueryHookResult = ReturnType<typeof useAutocompleteFiltersCategoriesLazyQuery>;
 export type AutocompleteFiltersCategoriesQueryResult = Apollo.QueryResult<Types.AutocompleteFiltersCategoriesQuery, Types.AutocompleteFiltersCategoriesQueryVariables>;
+export const AutocompleteFiltersProductTypesDocument = gql`
+    query AutocompleteFiltersProductTypes($first: Int!, $after: String, $search: String) {
+  productTypes(after: $after, first: $first, filter: {search: $search}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAutocompleteFiltersProductTypesQuery__
+ *
+ * To run a query within a React component, call `useAutocompleteFiltersProductTypesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAutocompleteFiltersProductTypesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAutocompleteFiltersProductTypesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useAutocompleteFiltersProductTypesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AutocompleteFiltersProductTypesQuery, Types.AutocompleteFiltersProductTypesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AutocompleteFiltersProductTypesQuery, Types.AutocompleteFiltersProductTypesQueryVariables>(AutocompleteFiltersProductTypesDocument, options);
+      }
+export function useAutocompleteFiltersProductTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AutocompleteFiltersProductTypesQuery, Types.AutocompleteFiltersProductTypesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AutocompleteFiltersProductTypesQuery, Types.AutocompleteFiltersProductTypesQueryVariables>(AutocompleteFiltersProductTypesDocument, options);
+        }
+export type AutocompleteFiltersProductTypesQueryHookResult = ReturnType<typeof useAutocompleteFiltersProductTypesQuery>;
+export type AutocompleteFiltersProductTypesLazyQueryHookResult = ReturnType<typeof useAutocompleteFiltersProductTypesLazyQuery>;
+export type AutocompleteFiltersProductTypesQueryResult = Apollo.QueryResult<Types.AutocompleteFiltersProductTypesQuery, Types.AutocompleteFiltersProductTypesQueryVariables>;
+export const AutocompleteFiltersCollectionsDocument = gql`
+    query AutocompleteFiltersCollections($first: Int!, $after: String, $search: String) {
+  collections(after: $after, first: $first, filter: {search: $search}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAutocompleteFiltersCollectionsQuery__
+ *
+ * To run a query within a React component, call `useAutocompleteFiltersCollectionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAutocompleteFiltersCollectionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAutocompleteFiltersCollectionsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useAutocompleteFiltersCollectionsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AutocompleteFiltersCollectionsQuery, Types.AutocompleteFiltersCollectionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AutocompleteFiltersCollectionsQuery, Types.AutocompleteFiltersCollectionsQueryVariables>(AutocompleteFiltersCollectionsDocument, options);
+      }
+export function useAutocompleteFiltersCollectionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AutocompleteFiltersCollectionsQuery, Types.AutocompleteFiltersCollectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AutocompleteFiltersCollectionsQuery, Types.AutocompleteFiltersCollectionsQueryVariables>(AutocompleteFiltersCollectionsDocument, options);
+        }
+export type AutocompleteFiltersCollectionsQueryHookResult = ReturnType<typeof useAutocompleteFiltersCollectionsQuery>;
+export type AutocompleteFiltersCollectionsLazyQueryHookResult = ReturnType<typeof useAutocompleteFiltersCollectionsLazyQuery>;
+export type AutocompleteFiltersCollectionsQueryResult = Apollo.QueryResult<Types.AutocompleteFiltersCollectionsQuery, Types.AutocompleteFiltersCollectionsQueryVariables>;
 export const InitialProductFilterCollectionsDocument = gql`
     query InitialProductFilterCollections($collections: [ID!]) {
   collections(first: 100, filter: {ids: $collections}) {

@@ -1,23 +1,37 @@
 import React from "react"
-import { AutocompleteOperand } from "./../../State/reducer"
-import { useAutocompleteFiltersCategoriesLazyQuery } from "@dashboard/graphql"
-import { mapCategories } from "./../../State/maps"
-import { Autocomplete } from "./../Autocomplete"
+import { toChannelValue } from "./../../State/maps"
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext"
+import { Expression } from "@saleor/macaw-ui/next"
+import { useFilterContext } from "../../State/context"
+import { DropdownOperand, Value } from "../../State/types"
 
-export const ChannelOperand = ({ operand }: { operand: AutocompleteOperand }) => {
-  const [load, { loading, data }] = useAutocompleteFiltersCategoriesLazyQuery();
-  const categories = data ? data.categories.edges.map(mapCategories) : []
+const obtainTriggerText = (operand: DropdownOperand) => {
+  if (operand.selected) {
+    return operand.selected.displayName
+  }
 
-  const handleChange = (search) => {
-    load({ variables: { search }})
+  return  "Pick channel"
+}
+
+export const ChannelOperand = ({ operand }: { operand: DropdownOperand }) => {
+  const context = useFilterContext()
+  const { availableChannels } = useAppChannel(false);
+  const channels = availableChannels.map(toChannelValue)
+
+  const handleChange = (channel: Value) => {
+    context.changeDropdownOperand(operand, channel)
   }
 
   return (
-    <Autocomplete
-      operand={operand}
-      placeholder="Set channel"
-      onChange={handleChange}
-      items={categories}
-    />
+    <Expression.OperandDropdown triggerText={obtainTriggerText(operand)}>
+      {channels.map((item) => (
+        <Expression.OperantDropdownItem
+          key={item.id}
+          onClick={() => handleChange(item)}
+        >
+          {item.displayName}
+        </Expression.OperantDropdownItem>
+      ))}
+    </Expression.OperandDropdown>
   )
 }

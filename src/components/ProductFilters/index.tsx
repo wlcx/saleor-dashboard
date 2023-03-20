@@ -6,7 +6,7 @@ import { Content } from "./Content"
 import { FilterProvider } from "./State/provider"
 import { useFilterContext } from "./State/context"
 import { ExpressionContainer } from "./ExpressionContainer"
-import { isExpression } from "./State/reducer"
+import { isExpression } from "./State/guards"
 
 const FilterExpressions = () => {
   const { filters } = useFilterContext()
