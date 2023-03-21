@@ -57,7 +57,7 @@ storiesOf("Products / Create product variant", module)
           attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
           field: "sku",
-          message: "Sku already exists",
+          message: "SKU already exists",
         },
       ].map(error => ({
         __typename: "ProductError",
