@@ -68,7 +68,7 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
-import ProductListPage from "../../components/ProductListPage";
+import ProductListPage, { createFilterStructure } from "../../components/ProductListPage";
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -81,6 +81,9 @@ import {
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
+import { FilterState} from "@dashboard/components/ExpressionFilters/State/types";
+import { mapFilterStateToInput, mapFilterToFilterQueryParams } from "@dashboard/components/ExpressionFilters/State/maps/product";
+import useFilter from "@dashboard/components/Filter/useFilter";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -220,15 +223,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
+  
   const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: reset,
-      createUrl: productListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-    });
-
+  createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: productListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+  });
+  
   const handleTabChange = (tab: number) => {
     reset();
     navigate(
@@ -236,8 +240,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         activeTab: tab.toString(),
         ...getFilterTabs()[tab - 1].data,
       }),
-    );
-  };
+      );
+    };
+    
 
   const handleFilterTabDelete = () => {
     deleteFilterTab(currentTab);
@@ -355,6 +360,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts,
   );
 
+
+  const handleChangeFilters = (f: FilterState) => {
+    navigate(productListUrl(mapFilterToFilterQueryParams(f)))
+  }
+
+
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,
@@ -413,7 +424,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         onSearchChange={handleSearchChange}
-        onFilterChange={changeFilters}
+        onFilterUpdate={handleChangeFilters}
         onFilterAttributeFocus={setFocusedAttribute}
         onTabSave={() => openModal("save-search")}
         onTabDelete={() => openModal("delete-search")}

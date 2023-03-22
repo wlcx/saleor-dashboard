@@ -45,11 +45,12 @@ import {
   ProductFilterKeys,
   ProductListFilterOpts,
 } from "./filters";
+import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
+    Omit<FilterPageProps<ProductFilterKeys, ProductListFilterOpts>, "onFilterChange">,
     FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
@@ -66,6 +67,7 @@ export interface ProductListPageProps
   onAdd: () => void;
   onExport: () => void;
   onColumnQueryChange: (query: string) => void;
+  onFilterUpdate: (filter: FilterState) => void
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -88,7 +90,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onColumnQueryChange,
     onExport,
     onFetchMore,
-    onFilterChange,
+    onFilterUpdate,
     onFilterAttributeFocus,
     onSearchChange,
     onUpdateListSettings,
@@ -202,8 +204,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           <FilterBar
             currencySymbol={currencySymbol}
             initialSearch={initialSearch}
-            onFilterChange={onFilterChange}
-            onFilterAttributeFocus={onFilterAttributeFocus}
+            onFilterUpdate={onFilterUpdate}
             onSearchChange={onSearchChange}
             filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({

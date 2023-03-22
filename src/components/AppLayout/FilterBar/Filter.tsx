@@ -11,20 +11,21 @@ import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
 import { getSelectedFilterAmount } from "./utils";
-import { ProductFilters } from "@dashboard/components/ProductFilters";
+import { ProductFilters } from "@dashboard/components/ExpressionFilters";
+import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
   errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;
-  onFilterAdd: (filter: Array<FilterElement<string>>) => void;
+  onFilterUpdate: (filter: FilterState) => void;
   onFilterAttributeFocus?: (id?: string) => void;
 }
 
 export const Filter = ({
   currencySymbol,
   menu,
-  onFilterAdd,
+  onFilterUpdate,
   onFilterAttributeFocus,
   errorMessages,
 }: FilterProps) => {
@@ -48,7 +49,7 @@ export const Filter = ({
     }
 
     setFilterErrors({});
-    onFilterAdd(data);
+    // onFilterAdd(data);
     setFilterMenuOpened(false);
   };
 
@@ -56,6 +57,7 @@ export const Filter = ({
     reset();
     setFilterErrors({});
   };
+
 
   return (
     <ClickAwayListener
@@ -66,54 +68,7 @@ export const Filter = ({
       }}
       mouseEvent="onMouseUp"
     >
-      <div ref={anchor}>
-        <ProductFilters />
-        <Popper
-          className={sprinkles({
-            backgroundColor: "surfaceNeutralPlain",
-            overflowY: "scroll",
-            boxShadow: "modal",
-            zIndex: "3",
-          })}
-          style={{
-            width: "376px",
-            height: "450px",
-          }}
-          open={isFilterMenuOpened}
-          anchorEl={anchor.current}
-          transition
-          disablePortal
-          placement="bottom-start"
-          modifiers={{
-            flip: {
-              enabled: false,
-            },
-            hide: {
-              enabled: false,
-            },
-            preventOverflow: {
-              boundariesElement: "scrollParent",
-              enabled: false,
-            },
-          }}
-        >
-          {() => (
-            <Grow>
-              <FilterContent
-                errorMessages={errorMessages}
-                errors={filterErrors}
-                dataStructure={menu}
-                currencySymbol={currencySymbol}
-                filters={data}
-                onClear={handleClear}
-                onFilterPropertyChange={dispatch}
-                onFilterAttributeFocus={onFilterAttributeFocus}
-                onSubmit={handleSubmit}
-              />
-            </Grow>
-          )}
-        </Popper>
-      </div>
+        <ProductFilters onShowClick={onFilterUpdate} />
     </ClickAwayListener>
   );
 };
