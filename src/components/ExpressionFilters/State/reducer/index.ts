@@ -1,8 +1,13 @@
 import { AutocompleteOperand, Condition, ConditionValue, DropdownOperand, FilterKind, FilterState, NumberOperand, RangeOperand, TextOperand, Value } from "../types"
-import { autocompleteReducer, conditionReducer, dropdownReducer, emptyReducer, expressionReducer, filterKindReducer, numberReducer, rangeReducer } from "./scope"
+import { autocompleteReducer, conditionReducer, dropdownReducer, emptyReducer, expressionReducer, filterKindReducer, initReducer, numberReducer, rangeReducer } from "./scope"
 
 export type AddEmptyAaction = {
   type: "ADD_EMPTY"
+}
+
+export type InitAction = {
+  type: "INIT",
+  payload: { filters: FilterState }
 }
 
 export type ChangeFilterKindAction = {
@@ -47,6 +52,7 @@ export type RemoveExpressionAction = {
 
 export type FilterAction =
   | AddEmptyAaction
+  | InitAction
   | ChangeFilterKindAction
   | ChangeDropdownAction
   | ChangeAutocompleteAction
@@ -61,12 +67,17 @@ export const filterReducer = (state: FilterState, action: FilterAction): FilterS
   switch (action.type) {
     case "ADD_EMPTY":
       return emptyReducer(state)
+    case "INIT":
+      return initReducer(state, action)
     case "CHANGE_FILTER_KIND":
       return filterKindReducer(state, action)
     case "CHANGE_DROPDOWN":
       return dropdownReducer(state, action)
     case "CHANGE_AUTOCOMPLETE":
-      return autocompleteReducer(state, action)
+      const x = autocompleteReducer(state, action)
+      console.log("input", state)
+      console.log("generated", x)
+      return x
     case "CHANGE_NUMBER":
       return numberReducer(state, action)
     case "CHANGE_RANGE":

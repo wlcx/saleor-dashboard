@@ -42,14 +42,27 @@ const cleanToDirty = (el: string) => {
   return { isDirty: false, value: el }
 }
 
-const stringToToken = (el: string) => {
-  return { isDirty: false, value: el }
+const valueToToken = (el: Value) => {
+  return { isDirty: false, value: el.displayName }
 }
 
-const createTokensFromValue = (initialValue: string) => {
+
+const valueToString = (el: Value) => {
+  return el.displayName
+}
+
+const createTokensFromSelected = (initialValue: Value[]) => {
   return initialValue
-    .split(",")
-    .map(stringToToken)
+    .map(valueToToken)
+}
+
+const createStringValueFromSelected = (initialValue: Value[]) => {
+  if (initialValue.length == 0) return ""
+
+  return initialValue
+    .map(valueToString)
+    .join(",")
+    + ","
 }
 
 const generateDirtyTokens = (editedValue: string) => {
@@ -96,11 +109,11 @@ const byTokenValues = (tokensValues: string[]) => (el: Value) => {
   return tokensValues.includes(el.displayName)
 }
 
-export const useTokenizedValue = (initial: string) => {
+export const useTokenizedValue = (initial: Value[]) => {
   const [tokenizedState, setTokenizedState] = useState<TokenizedState>({
-    stringValue: initial,
-    tokens: createTokensFromValue(initial),
-    selected: []
+    stringValue: createStringValueFromSelected(initial),
+    tokens: createTokensFromSelected(initial),
+    selected: initial
   })
 
   const keyDown = (event: KeyboardEvent<HTMLInputElement>) => {

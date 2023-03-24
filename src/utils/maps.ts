@@ -68,6 +68,7 @@ export function mapNodeToChoice<T extends ExtendedNode>(
   }
 
   return nodes.map(node => ({
+    id: node.id,
     label: node.name,
     value: getterFn ? getterFn(node) : node.id,
   }));

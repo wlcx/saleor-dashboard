@@ -6,8 +6,10 @@ import { numberReducer } from "./numberReducer";
 import { rangeReducer } from "./rangeReducer"
 import { conditionReducer } from "./conditionReducer"
 import { expressionReducer } from "./expressionReducer"
+import { initReducer } from "./initReducer"
 
 export {
+  initReducer,
   emptyReducer,
   filterKindReducer,
   dropdownReducer,

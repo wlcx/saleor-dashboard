@@ -1,10 +1,14 @@
-import React, { useReducer } from "react"
+import React, { useEffect, useReducer } from "react"
 import { FilterContext } from "./context"
 import { AutocompleteOperand, Condition, ConditionValue, DropdownOperand, FilterKind, NumberOperand, RangeOperand, TextOperand, Value } from "./types"
 import { filterReducer } from "./reducer"
 
-export const FilterProvider = ({ children }) => {
-  const [filters, dispatch] = useReducer(filterReducer, [])
+export const FilterProvider = ({ children, filter }) => {
+  const [filters, dispatch] = useReducer(filterReducer, filter)
+
+  useEffect(() => {
+    dispatch({ type: "INIT", payload: { filters: filter } })
+  }, [filter])
 
   const changeFilterKind = (currentKind: FilterKind, newValue: Value) => {
     dispatch({ type: "CHANGE_FILTER_KIND", payload: { currentKind, newValue } })

@@ -365,7 +365,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     navigate(productListUrl(mapFilterToFilterQueryParams(f)))
   }
 
-
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,

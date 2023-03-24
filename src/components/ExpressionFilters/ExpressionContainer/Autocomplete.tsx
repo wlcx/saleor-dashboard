@@ -21,7 +21,7 @@ export const Autocomplete = ({ operand, items, placeholder, onChange, onSelect }
     keyDown,
     clean,
     selected
-  } = useTokenizedValue("")
+  } = useTokenizedValue(operand.selected)
   const [open, setOpen] = useState(false);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

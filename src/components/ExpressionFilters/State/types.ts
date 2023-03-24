@@ -1,5 +1,4 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql"
-import { filterReducer } from "./reducer"
 
 export type LiteralUnion<X> = X[keyof X]
 

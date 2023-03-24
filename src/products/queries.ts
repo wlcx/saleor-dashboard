@@ -29,8 +29,8 @@ export const initialProductFilterCategoriesQuery = gql`
 `;
 
 export const autocompleteFiltersCategoriesQuery = gql`
-  query AutocompleteFiltersCategories($search: String) {
-    categories(first: 30, filter: { search: $search }) {
+  query AutocompleteFiltersCategories($search: String, $ids: [ID!]) {
+    categories(first: 30, filter: { search: $search, ids: $ids }) {
       edges {
         node {
           id

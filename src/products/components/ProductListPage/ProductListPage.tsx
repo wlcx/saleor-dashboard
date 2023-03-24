@@ -46,6 +46,7 @@ import {
   ProductListFilterOpts,
 } from "./filters";
 import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
+import { mapFilterOptsToFilterState } from "@dashboard/components/ExpressionFilters/State/maps/product";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -102,6 +103,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const intl = useIntl();
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
+  const filterState = mapFilterOptsToFilterState(filterOpts)
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
@@ -207,6 +209,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             onFilterUpdate={onFilterUpdate}
             onSearchChange={onSearchChange}
             filterStructure={filterStructure}
+            filterState={filterState}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",

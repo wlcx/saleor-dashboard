@@ -30,11 +30,12 @@ const FilterExpressions = () => {
 
 interface ProductFiltersProps {
   onShowClick: (filtersInput: FilterState) => void
+  filter: FilterState
 }
 
-export const ProductFilters = ({ onShowClick }: ProductFiltersProps) => {
+export const ProductFilters = ({ onShowClick, filter }: ProductFiltersProps) => {
   return (
-    <FilterProvider>
+    <FilterProvider filter={filter}>
       <Dropdown>
         <Dropdown.Trigger>
           <DropdownButton data-test-id="show-filters-button">

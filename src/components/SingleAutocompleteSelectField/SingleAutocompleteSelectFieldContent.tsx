@@ -28,6 +28,7 @@ export interface SingleAutocompleteChoiceType<
   V extends ChoiceValue = ChoiceValue,
   L = string
 > {
+  id?: string;
   label: L;
   value: V;
 }

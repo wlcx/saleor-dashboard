@@ -9060,6 +9060,7 @@ export type InitialProductFilterCategoriesQuery = { __typename: 'Query', categor
 
 export type AutocompleteFiltersCategoriesQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']>;
+  ids?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;
 
 

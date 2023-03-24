@@ -12590,8 +12590,8 @@ export type InitialProductFilterCategoriesQueryHookResult = ReturnType<typeof us
 export type InitialProductFilterCategoriesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterCategoriesLazyQuery>;
 export type InitialProductFilterCategoriesQueryResult = Apollo.QueryResult<Types.InitialProductFilterCategoriesQuery, Types.InitialProductFilterCategoriesQueryVariables>;
 export const AutocompleteFiltersCategoriesDocument = gql`
-    query AutocompleteFiltersCategories($search: String) {
-  categories(first: 30, filter: {search: $search}) {
+    query AutocompleteFiltersCategories($search: String, $ids: [ID!]) {
+  categories(first: 30, filter: {search: $search, ids: $ids}) {
     edges {
       node {
         id
@@ -12615,6 +12615,7 @@ export const AutocompleteFiltersCategoriesDocument = gql`
  * const { data, loading, error } = useAutocompleteFiltersCategoriesQuery({
  *   variables: {
  *      search: // value for 'search'
+ *      ids: // value for 'ids'
  *   },
  * });
  */
