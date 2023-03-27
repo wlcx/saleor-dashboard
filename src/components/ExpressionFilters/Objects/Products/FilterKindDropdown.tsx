@@ -1,47 +1,92 @@
-import { Expression, Box } from "@saleor/macaw-ui/next"
-import React from "react"
-import { useFilterContext } from "../../State/context"
-import { useInitialProductFilterAttributesQuery } from "@dashboard/graphql"
-import { toAttributeValue } from "../../State/maps"
-import { FilterKind, Value } from "../../State/types"
+import { useInitialProductFilterAttributesQuery } from "@dashboard/graphql";
+import { Box, Expression } from "@saleor/macaw-ui/next";
+import React from "react";
+
+import { useFilterContext } from "../../State/context";
+import { toAttributeValue } from "../../State/maps";
+import { FilterKind, Value } from "../../State/types";
 
 interface ExpressionContainerProps {
-  filterKind: FilterKind
+  filterKind: FilterKind;
+}
+
+interface FilterKindProps {
+  filterKind: FilterKind;
+  choices: Value[];
+  loading?: boolean;
 }
 
 const staticChoices: Value[] = [
-  { id: "category", name: "category", displayName: "Category", dataType: "category" },
-  { id: "channel", name: "channel", displayName: "Channel", dataType: "channel" },
-  { id: "product-type", name: "product-type", displayName: "Product type", dataType: "product-type" },
+  {
+    id: "category",
+    name: "category",
+    displayName: "Category",
+    dataType: "category",
+  },
+  {
+    id: "channel",
+    name: "channel",
+    displayName: "Channel",
+    dataType: "channel",
+  },
+  {
+    id: "product-type",
+    name: "product-type",
+    displayName: "Product type",
+    dataType: "product-type",
+  },
   { id: "price", name: "price", displayName: "Price", dataType: "price" },
-  { id: "collection", name: "collection", displayName: "Collection", dataType: "collection" },
-]
+  {
+    id: "collection",
+    name: "collection",
+    displayName: "Collection",
+    dataType: "collection",
+  },
+];
 
 const useFilterKindOptions = () => {
-  const { data: attributesData, loading: attributesLoading } = useInitialProductFilterAttributesQuery();
+  const { data: attributesData, loading: attributesLoading } =
+    useInitialProductFilterAttributesQuery();
 
-  const attributeValues = attributesData.attributes.edges.map(toAttributeValue)
+  const attributeValues = attributesData.attributes.edges.map(toAttributeValue);
 
-  const loading = attributesLoading
-  const choices = staticChoices.concat(attributeValues)
+  const loading = attributesLoading;
+  const choices = staticChoices.concat(attributeValues);
 
   return {
     loading,
-    choices
-  }
-}
+    choices,
+  };
+};
 
-export const FilterKindDropdown = ({ filterKind }: ExpressionContainerProps) => {  
-  const { loading, choices } = useFilterKindOptions()
-  const context = useFilterContext()
+export const FilterKindDropdown = ({
+  filterKind,
+}: ExpressionContainerProps) => {
+  const { loading, choices } = useFilterKindOptions();
+
+  return (
+    <FilterKindSelecor
+      filterKind={filterKind}
+      choices={choices}
+      loading={loading}
+    />
+  );
+};
+
+export const FilterKindSelecor = ({
+  filterKind,
+  choices,
+  loading,
+}: FilterKindProps) => {
+  const context = useFilterContext();
 
   const handleFilterKindChange = (newKind: Value) => {
-    context.changeFilterKind(filterKind, newKind)
-  }
+    context.changeFilterKind(filterKind, newKind);
+  };
 
   return (
     <Expression.OperandDropdown triggerText={filterKind.selected.displayName}>
-      {choices.map((item) => (
+      {choices.map(item => (
         <Expression.OperantDropdownItem
           key={item.id}
           onClick={() => handleFilterKindChange(item)}
@@ -49,9 +94,7 @@ export const FilterKindDropdown = ({ filterKind }: ExpressionContainerProps) => 
           {item.displayName}
         </Expression.OperantDropdownItem>
       ))}
-      {loading && (
-        <Box>loading...</Box>
-      )}
+      {loading && <Box>loading...</Box>}
     </Expression.OperandDropdown>
-  )
-}
+  );
+};
