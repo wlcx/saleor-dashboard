@@ -1,4 +1,4 @@
-import { ConditionValue, FilterKind, Operand, Value } from "../types"
+import { ConditionValue, FilterKind, Operand, Value } from "../../State/types";
 
 export const defaultRightOperandForKind = (kindValue: Value): Operand => {
   if (kindValue.dataType === "category") {
@@ -7,7 +7,7 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
       dataType: kindValue.dataType,
       selected: [],
       typedPhase: "",
-    }
+    };
   }
 
   if (kindValue.dataType === "channel") {
@@ -15,7 +15,7 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
       type: "dropdown",
       dataType: kindValue.dataType,
       selected: null,
-    }
+    };
   }
 
   if (kindValue.dataType === "product-type") {
@@ -24,7 +24,7 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
       dataType: kindValue.dataType,
       selected: [],
       typedPhase: "",
-    }
+    };
   }
 
   if (kindValue.dataType === "collection") {
@@ -33,15 +33,15 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
       dataType: kindValue.dataType,
       selected: [],
       typedPhase: "",
-    }
+    };
   }
 
   if (kindValue.dataType === "price") {
     return {
       type: "number",
       dataType: kindValue.dataType,
-      value: 0
-    }
+      value: 0,
+    };
   }
 
   if (kindValue.dataType === "attr:DROPDOWN") {
@@ -49,9 +49,8 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
       type: "dropdown",
       dataType: kindValue.dataType,
       selected: null,
-    }
+    };
   }
-
 
   if (kindValue.dataType === "attr:MULTISELECT") {
     return {
@@ -59,15 +58,15 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
       dataType: kindValue.dataType,
       selected: [],
       typedPhase: "",
-    }
+    };
   }
 
   if (kindValue.dataType === "attr:NUMERIC") {
     return {
       type: "number",
       dataType: kindValue.dataType,
-      value: 0
-    }
+      value: 0,
+    };
   }
 
   if (kindValue.dataType === "attr:BOOLEAN") {
@@ -75,41 +74,38 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
       type: "dropdown",
       dataType: kindValue.dataType,
       selected: null,
-    }
+    };
   }
 
   if (kindValue.dataType === "attr:SWATCH") {
-
-    console.log("SWATCH TO COVER")
-    return null
+    return null;
   }
 
   if (kindValue.dataType === "attr:DATE") {
-
-    console.log("DATE TO COVER")
-    return null
+    return null;
   }
 
   if (kindValue.dataType === "attr:DATE_TIME") {
-
-    console.log("DATE_TIME TO COVER")
-    return null
+    return null;
   }
 
-  return null
-}
+  return null;
+};
 
-export const defaultRightOperandForCondition = (kindValue: FilterKind, newCondition: ConditionValue): Operand => {
+export const defaultRightOperandForCondition = (
+  kindValue: FilterKind,
+  newCondition: ConditionValue,
+): Operand => {
   if (["price", "attr:NUMERIC"].includes(kindValue.selected.dataType)) {
     if (newCondition === "is between") {
       return {
         type: "range",
         dataType: kindValue.selected.dataType,
         left: 0,
-        right: 0
-      }
+        right: 0,
+      };
     }
   }
 
-  return defaultRightOperandForKind(kindValue.selected)
-}
+  return defaultRightOperandForKind(kindValue.selected);
+};

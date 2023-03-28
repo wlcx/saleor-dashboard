@@ -1,21 +1,19 @@
-import { emptyReducer } from "./emptyReducer";
-import { filterKindReducer } from "./filterKindReducer";
-import { dropdownReducer } from "./dropdownReducer";
 import { autocompleteReducer } from "./autocompleteReducer";
+import { conditionReducer } from "./conditionReducer";
+import { dropdownReducer } from "./dropdownReducer";
+import { emptyReducer } from "./emptyReducer";
+import { expressionReducer } from "./expressionReducer";
+import { initReducer } from "./initReducer";
 import { numberReducer } from "./numberReducer";
-import { rangeReducer } from "./rangeReducer"
-import { conditionReducer } from "./conditionReducer"
-import { expressionReducer } from "./expressionReducer"
-import { initReducer } from "./initReducer"
+import { rangeReducer } from "./rangeReducer";
 
 export {
   initReducer,
   emptyReducer,
-  filterKindReducer,
   dropdownReducer,
   autocompleteReducer,
   numberReducer,
   rangeReducer,
   conditionReducer,
-  expressionReducer
-}
+  expressionReducer,
+};

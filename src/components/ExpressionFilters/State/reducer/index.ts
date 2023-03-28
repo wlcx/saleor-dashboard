@@ -16,7 +16,6 @@ import {
   dropdownReducer,
   emptyReducer,
   expressionReducer,
-  filterKindReducer,
   initReducer,
   numberReducer,
   rangeReducer,
@@ -92,8 +91,6 @@ export const filterReducer = (
       return emptyReducer(state);
     case "INIT":
       return initReducer(state, action);
-    case "CHANGE_FILTER_KIND":
-      return filterKindReducer(state, action);
     case "CHANGE_DROPDOWN":
       return dropdownReducer(state, action);
     case "CHANGE_AUTOCOMPLETE":
