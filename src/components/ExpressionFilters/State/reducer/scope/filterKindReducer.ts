@@ -7,9 +7,6 @@ import { defaultRightOperandForKind } from "../rightOperand"
 export const filterKindReducer = (state: FilterState, action: ChangeFilterKindAction): FilterState => state.map((item) => {
   if (!isMatchFilterKind(item, action.payload.currentKind)) return item
 
-
-  console.log("SELECT NEW KIND", action.payload)
-
   return {
     ...item,
     filterKind: {

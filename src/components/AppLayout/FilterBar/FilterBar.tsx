@@ -4,7 +4,7 @@ import { Box } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 import SearchInput from "./SearchInput";
 import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
-import { ProductFilters } from "@dashboard/components/ExpressionFilters";
+import { ExpressionProductFilters, ProductFilters } from "@dashboard/components/ExpressionFilters";
 import useRouter from "use-react-router";
 import { parse as parseQs } from "qs";
 import { mapInputToFilter } from "@dashboard/components/ExpressionFilters/State/maps/product";
@@ -45,7 +45,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         borderBottomWidth={1}
       >
         <Box display="flex" alignItems="center" gap={7}>
-          <ProductFilters onShowClick={onFilterUpdate} filter={filterState} />
+          <ExpressionProductFilters onShowClick={onFilterUpdate} filter={filterState} />
           <Box __width="320px">
             <SearchInput
               initialSearch={initialSearch}

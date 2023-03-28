@@ -1,9 +1,14 @@
-import React, { useEffect, useReducer } from "react"
+import React, { ReactNode, useEffect, useReducer } from "react"
 import { FilterContext } from "./context"
-import { AutocompleteOperand, Condition, ConditionValue, DropdownOperand, FilterKind, NumberOperand, RangeOperand, TextOperand, Value } from "./types"
+import { AutocompleteOperand, Condition, ConditionValue, DropdownOperand, FilterKind, FilterState, NumberOperand, RangeOperand, TextOperand, Value } from "./types"
 import { filterReducer } from "./reducer"
+import { Dropdown, DropdownButton } from "@saleor/macaw-ui/next"
+import { Groups } from "./../Groups"
+import { Footer } from "./../Footer"
+import { Content } from "./../Content"
+import { FormattedMessage } from "react-intl"
 
-export const FilterProvider = ({ children, filter }) => {
+export const Provider = ({ children, filter }) => {
   const [filters, dispatch] = useReducer(filterReducer, filter)
 
   useEffect(() => {
@@ -61,5 +66,33 @@ export const FilterProvider = ({ children, filter }) => {
     }}>
       {children}
     </FilterContext.Provider>
+  )
+}
+
+interface FilterProviderProps {
+  onShowClick: (filtersInput: FilterState) => void
+  filter: FilterState
+  children: ReactNode
+}
+
+export const FilterProvider = ({ filter, children, onShowClick }: FilterProviderProps) => {
+  return (
+    <Provider filter={filter}>
+      <Dropdown>
+        <Dropdown.Trigger>
+          <DropdownButton data-test-id="show-filters-button">
+            <FormattedMessage
+              id="FNpv6K"
+              defaultMessage="Filters"
+              description="button"
+            />
+          </DropdownButton>
+        </Dropdown.Trigger>
+        <Content>
+          {children}
+          <Footer onShowClick={onShowClick} />
+        </Content>
+      </Dropdown>
+    </Provider>
   )
 }

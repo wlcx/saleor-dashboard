@@ -11,7 +11,7 @@ import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
 import { getSelectedFilterAmount } from "./utils";
-import { ProductFilters } from "@dashboard/components/ExpressionFilters";
+import { ExoressionProductFilters } from "@dashboard/components/ExpressionFilters";
 import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
 
 export interface FilterProps<TFilterKeys extends string = string> {
@@ -68,7 +68,7 @@ export const Filter = ({
       }}
       mouseEvent="onMouseUp"
     >
-        <ProductFilters onShowClick={onFilterUpdate} />
+        <ExoressionProductFilters onShowClick={onFilterUpdate} />
     </ClickAwayListener>
   );
 };

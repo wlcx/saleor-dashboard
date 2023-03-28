@@ -1,19 +1,11 @@
 import { useInitialProductFilterAttributesQuery } from "@dashboard/graphql";
-import { Box, Expression } from "@saleor/macaw-ui/next";
-import React from "react";
-
-import { useFilterContext } from "../../State/context";
+import React, { useEffect } from "react";
 import { toAttributeValue } from "../../State/maps";
 import { FilterKind, Value } from "../../State/types";
+import { FilterKindSelecor } from "../../ExpressionContainer/FilterKindSelector";
 
 interface ExpressionContainerProps {
   filterKind: FilterKind;
-}
-
-interface FilterKindProps {
-  filterKind: FilterKind;
-  choices: Value[];
-  loading?: boolean;
 }
 
 const staticChoices: Value[] = [
@@ -70,31 +62,5 @@ export const FilterKindDropdown = ({
       choices={choices}
       loading={loading}
     />
-  );
-};
-
-export const FilterKindSelecor = ({
-  filterKind,
-  choices,
-  loading,
-}: FilterKindProps) => {
-  const context = useFilterContext();
-
-  const handleFilterKindChange = (newKind: Value) => {
-    context.changeFilterKind(filterKind, newKind);
-  };
-
-  return (
-    <Expression.OperandDropdown triggerText={filterKind.selected.displayName}>
-      {choices.map(item => (
-        <Expression.OperantDropdownItem
-          key={item.id}
-          onClick={() => handleFilterKindChange(item)}
-        >
-          {item.displayName}
-        </Expression.OperantDropdownItem>
-      ))}
-      {loading && <Box>loading...</Box>}
-    </Expression.OperandDropdown>
   );
 };
