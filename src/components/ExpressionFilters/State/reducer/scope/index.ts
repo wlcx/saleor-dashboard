@@ -1,5 +1,4 @@
 import { autocompleteReducer } from "./autocompleteReducer";
-import { conditionReducer } from "./conditionReducer";
 import { dropdownReducer } from "./dropdownReducer";
 import { emptyReducer } from "./emptyReducer";
 import { expressionReducer } from "./expressionReducer";
@@ -14,6 +13,5 @@ export {
   autocompleteReducer,
   numberReducer,
   rangeReducer,
-  conditionReducer,
   expressionReducer,
 };
