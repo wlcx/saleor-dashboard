@@ -1,6 +1,7 @@
 
 import { Expression } from "@saleor/macaw-ui/next"
 import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react"
+
 import { useTokenizedValue } from "../State/hooks"
 import { AutocompleteOperand, Value } from "../State/types"
 
@@ -44,13 +45,13 @@ export const Autocomplete = ({ operand, items, placeholder, onChange, onSelect }
   }
   
   useEffect(() => {
-    if (!selected.length) return
+    if (!selected.length) {return}
 
     onSelect(operand, selected)
   }, [selected])
 
   useEffect(() => {
-    if (!input) return
+    if (!input) {return}
 
     onChange(input)
   }, [input])

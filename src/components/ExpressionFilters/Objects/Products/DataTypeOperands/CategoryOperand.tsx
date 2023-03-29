@@ -1,10 +1,10 @@
 import { useAutocompleteFiltersCategoriesLazyQuery } from "@dashboard/graphql";
 import React from "react";
 
-import { useFilterContext } from "../../../State/context";
-import { AutocompleteOperand, Value } from "../../../State/types";
-import { toCategoryValue } from "../../../State/maps";
 import { Autocomplete } from "../../../ExpressionContainer/Autocomplete";
+import { useFilterContext } from "../../../State/context";
+import { toCategoryValue } from "../../../State/maps";
+import { AutocompleteOperand, Value } from "../../../State/types";
 
 export const CategoryOperand = ({
   operand,

@@ -1,5 +1,6 @@
-import { useContext, createContext } from "react";
-import { AutocompleteOperand, Condition, ConditionValue, FilterState, DropdownOperand, FilterKind, NumberOperand, RangeOperand, TextOperand, Value } from "./types";
+import { createContext,useContext } from "react";
+
+import { AutocompleteOperand, Condition, ConditionValue, DropdownOperand, FilterKind, FilterState, NumberOperand, RangeOperand, TextOperand, Value } from "./types";
 
 export interface FilterContextState {
   filters: FilterState,

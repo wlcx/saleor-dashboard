@@ -1,8 +1,9 @@
 import { useInitialProductFilterAttributesQuery } from "@dashboard/graphql";
-import React, { useEffect } from "react";
+import React from "react";
+
+import { FilterKindSelecor } from "../../ExpressionContainer/FilterKindSelector";
 import { toAttributeValue } from "../../State/maps";
 import { FilterKind, Value } from "../../State/types";
-import { FilterKindSelecor } from "../../ExpressionContainer/FilterKindSelector";
 
 interface ExpressionContainerProps {
   filterKind: FilterKind;

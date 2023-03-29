@@ -1,10 +1,10 @@
 import {
+  AutocompleteFiltersCategoriesQuery,
+  AutocompleteFiltersCollectionsQuery,
   AutocompleteFiltersProductTypesQuery,
   ChannelFragment,
-  InitialProductFilterAttributesQuery,
-  AutocompleteFiltersCategoriesQuery,
-  AutocompleteFiltersCollectionsQuery
-} from "@dashboard/graphql"
+  InitialProductFilterAttributesQuery} from "@dashboard/graphql"
+
 import { DataType, Value } from "../types"
 
 export type AttributEdge = InitialProductFilterAttributesQuery["attributes"]["edges"][number]

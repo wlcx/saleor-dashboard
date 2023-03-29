@@ -1,5 +1,6 @@
+import { Box,Button } from "@saleor/macaw-ui/next"
 import React from "react"
-import { Button, Box } from "@saleor/macaw-ui/next"
+
 import { useFilterContext } from "../State/context"
 import { FilterState } from "../State/types"
 

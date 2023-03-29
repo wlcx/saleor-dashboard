@@ -6,7 +6,7 @@ export const autocompleteReducer = (state: FilterState, action: ChangeAutocomple
   if (
     !isMatchRightOperand(item, action.payload.operand) ||
     item.rightOperand.type !== "autocomplete"
-  ) return item
+  ) {return item}
 
   return {
     ...item,

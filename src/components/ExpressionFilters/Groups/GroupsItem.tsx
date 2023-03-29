@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react"
 import { Box } from "@saleor/macaw-ui/next"
+import React, { ReactNode } from "react"
 
 interface GroupsItem {
   children: ReactNode
@@ -7,8 +7,7 @@ interface GroupsItem {
   nested?: boolean
 }
 
-export const GroupsItem = ({ asWhere, nested, children }: GroupsItem) => {
-  return (
+export const GroupsItem = ({ asWhere, nested, children }: GroupsItem) => (
     <>
       <Box paddingY={3}>
         {asWhere ? "Where" : "And"}
@@ -22,6 +21,5 @@ export const GroupsItem = ({ asWhere, nested, children }: GroupsItem) => {
       </Box>
     </>
   )
-}
 
 GroupsItem.displayName = "Groups.Item"

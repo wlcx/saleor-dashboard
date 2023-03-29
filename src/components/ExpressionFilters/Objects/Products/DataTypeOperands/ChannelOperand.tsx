@@ -1,8 +1,9 @@
-import React from "react"
-import { toChannelValue } from "../../../State/maps"
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext"
 import { Expression } from "@saleor/macaw-ui/next"
+import React from "react"
+
 import { useFilterContext } from "../../../State/context"
+import { toChannelValue } from "../../../State/maps"
 import { DropdownOperand, Value } from "../../../State/types"
 
 const obtainTriggerText = (operand: DropdownOperand) => {

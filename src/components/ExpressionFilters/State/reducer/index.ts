@@ -99,8 +99,6 @@ export const filterReducer = (
       return numberReducer(state, action);
     case "CHANGE_RANGE":
       return rangeReducer(state, action);
-    case "CHANGE_CONDITION":
-      return conditionReducer(state, action);
     case "REMOVE_EXPRESSION":
       return expressionReducer(state, action);
     default:

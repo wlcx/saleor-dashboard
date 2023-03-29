@@ -6,7 +6,7 @@ export const dropdownReducer = (state: FilterState, action: ChangeDropdownAction
   if (
     !isMatchRightOperand(item, action.payload.operand) ||
     item.rightOperand.type !== "dropdown"
-  ) return item
+  ) {return item}
 
   return {
     ...item,

@@ -1,11 +1,11 @@
-import { FilterExpression, FilterState, NumberOperand, RangeOperand } from "../types";
-import { isExpression } from "../guards";
-import { ProductListUrlQueryParams } from "@dashboard/products/urls";
 import { ProductListFilterOpts } from "@dashboard/products/components/ProductListPage";
+import { ProductListUrlQueryParams } from "@dashboard/products/urls";
+
+import { isExpression } from "../guards";
+import { FilterExpression, FilterState, NumberOperand, RangeOperand } from "../types";
 
 
-export const mapFilterToFilterQueryParams = (state: FilterState): ProductListUrlQueryParams => {
-  return state
+export const mapFilterToFilterQueryParams = (state: FilterState): ProductListUrlQueryParams => state
   .filter(f => isExpression(f))
   .reduce<ProductListUrlQueryParams>((prev: ProductListUrlQueryParams, curr: FilterExpression) => {
     const { rightOperand } = curr
@@ -37,7 +37,6 @@ export const mapFilterToFilterQueryParams = (state: FilterState): ProductListUrl
 
     return prev
   }, {})
-}
 
 export const mapFilterOptsToFilterState = (filterInput: ProductListFilterOpts): FilterState => {
   const { categories, channel, productType, price, collections } = filterInput

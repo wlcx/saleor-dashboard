@@ -1,38 +1,27 @@
-import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
+import { ExpressionProductFilters } from "@dashboard/components/ExpressionFilters";
+import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
 import { FilterProps, SearchPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 import SearchInput from "./SearchInput";
-import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
-import { ExpressionProductFilters, ProductFilters } from "@dashboard/components/ExpressionFilters";
-import useRouter from "use-react-router";
-import { parse as parseQs } from "qs";
-import { mapInputToFilter } from "@dashboard/components/ExpressionFilters/State/maps/product";
 
 export interface FilterBarProps<TKeys extends string = string>
   extends Pick<FilterProps<TKeys>, "currencySymbol">,
   SearchPageProps {
   searchPlaceholder: string;
-  errorMessages?: FilterErrorMessages<TKeys>;
-  filterStructure: IFilter<TKeys>;
   actions?: ReactNode;
   filterState: FilterState
   onFilterUpdate: (filters: FilterState) => void
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
-  currencySymbol,
-  filterStructure,
   initialSearch,
   searchPlaceholder,
   onSearchChange,
   onFilterUpdate,
-  errorMessages,
   filterState,
   actions,
-}: FilterBarProps) => {
-
-  return (
+}: FilterBarProps) => (
     <>
       <Box
         display="grid"
@@ -59,6 +48,5 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         </Box>
       </Box>
     </>
-  );
-}
+  )
 FilterBar.displayName = "FilterBar";

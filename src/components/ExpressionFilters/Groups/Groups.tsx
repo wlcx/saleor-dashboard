@@ -1,12 +1,11 @@
-import React, { ReactNode } from "react"
 import { Box } from "@saleor/macaw-ui/next"
+import React, { ReactNode } from "react"
 
 interface GroupsProps {
   children: ReactNode
 }
 
-export const Groups = ({ children }: GroupsProps) => {
-  return (
+export const Groups = ({ children }: GroupsProps) => (
     <Box
       display="grid"
       fontSize="bodySmall"
@@ -18,6 +17,5 @@ export const Groups = ({ children }: GroupsProps) => {
       {children}
     </Box>
   )
-}
 
 Groups.displayName = "Groups"

@@ -27,26 +27,26 @@ export type DataType =
   | "price"
   | "empty"
 
-export type Condition = {
+export interface Condition {
   selected: ConditionValue
   choices: ConditionValue[]
 }
 
-export type Value = {
+export interface Value {
   id: string
   name: string
   displayName: string
   dataType: DataType
 }
 
-export type DropdownOperand = {
+export interface DropdownOperand {
   type: "dropdown",
   dataType: DataType,
   selected: Value,
 }
 
 
-export type AutocompleteOperand = {
+export interface AutocompleteOperand {
   type: "autocomplete",
   dataType: DataType,
   selected: Value[],
@@ -54,24 +54,24 @@ export type AutocompleteOperand = {
 }
 
 
-export type RangeOperand = {
+export interface RangeOperand {
   type: "range",
   dataType: DataType,
   left: number
   right: number
 }
 
-export type TextOperand = {
+export interface TextOperand {
   type: "text"
   dataType: DataType,
   value: string
-};
+}
 
-export type NumberOperand = {
+export interface NumberOperand {
   type: "number",
   dataType: DataType,
   value: number
-};
+}
 
 export type Operand =
   | DropdownOperand
@@ -80,7 +80,7 @@ export type Operand =
   | TextOperand
   | NumberOperand
 
-export type FilterKind = {
+export interface FilterKind {
   selected: Value
 }
 

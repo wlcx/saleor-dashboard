@@ -6,7 +6,7 @@ export const numberReducer = (state: FilterState, action: ChangeNumberAction): F
   if (
     !isMatchRightOperand(item, action.payload.operand) ||
     item.rightOperand.type !== "number"
-  ) return item
+  ) {return item}
 
   return {
     ...item,

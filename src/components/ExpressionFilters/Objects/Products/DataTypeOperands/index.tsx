@@ -1,13 +1,13 @@
-import { CategoryOperand } from "./CategoryOperand";
-import { ChannelOperand } from "./ChannelOperand";
-import { ProductTypeOperand } from "./ProductTypeOperand";
-import { CollectionOperand } from "./CollectionOperand"
-import { PriceOperand } from "./PriceOperand"
+import { AttributeBooleanOperand } from "./attribute/AttributeBooleanOperand"
 import { AttributeDropdownOperand } from "./attribute/AttributeDropdownOperand"
 import { AttributeMultiselectOperand } from "./attribute/AttributeMultiselectOperand"
 import { AttributeNumericOperand } from "./attribute/AttributeNumericOperand"
-import { AttributeBooleanOperand } from "./attribute/AttributeBooleanOperand"
+import { CategoryOperand } from "./CategoryOperand";
+import { ChannelOperand } from "./ChannelOperand";
+import { CollectionOperand } from "./CollectionOperand"
 import { EmptyOperand } from "./EmptyOperand"
+import { PriceOperand } from "./PriceOperand"
+import { ProductTypeOperand } from "./ProductTypeOperand";
 
 export {
   EmptyOperand,

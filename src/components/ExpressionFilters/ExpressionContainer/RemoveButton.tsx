@@ -1,5 +1,6 @@
 import { Button, RemoveIcon, sprinkles } from "@saleor/macaw-ui/next"
 import React from "react"
+
 import { useFilterContext } from "../State/context"
 import { FilterKind } from "../State/types"
 

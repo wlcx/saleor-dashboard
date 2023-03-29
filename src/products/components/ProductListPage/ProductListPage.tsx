@@ -7,6 +7,8 @@ import {
 import { FilterBar } from "@dashboard/components/AppLayout/FilterBar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { mapFilterOptsToFilterState } from "@dashboard/components/ExpressionFilters/State/maps/product";
+import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
@@ -45,8 +47,6 @@ import {
   ProductFilterKeys,
   ProductListFilterOpts,
 } from "./filters";
-import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
-import { mapFilterOptsToFilterState } from "@dashboard/components/ExpressionFilters/State/maps/product";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -60,7 +60,6 @@ export interface ProductListPageProps
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   columnQuery: string;
-  currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
@@ -77,7 +76,6 @@ const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
     columnQuery,
-    currencySymbol,
     defaultSettings,
     gridAttributes,
     limits,
@@ -204,11 +202,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <FilterBar
-            currencySymbol={currencySymbol}
             initialSearch={initialSearch}
             onFilterUpdate={onFilterUpdate}
             onSearchChange={onSearchChange}
-            filterStructure={filterStructure}
             filterState={filterState}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",

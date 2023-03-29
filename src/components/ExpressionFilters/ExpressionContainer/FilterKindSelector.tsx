@@ -1,7 +1,8 @@
-import React from "react";
 import { Box, Expression } from "@saleor/macaw-ui/next";
-import { useFilterContext } from "./../State/context";
+import React from "react";
+
 import { FilterKind, Value } from "../State/types";
+import { useFilterContext } from "./../State/context";
 
 interface FilterKindProps {
   filterKind: FilterKind;

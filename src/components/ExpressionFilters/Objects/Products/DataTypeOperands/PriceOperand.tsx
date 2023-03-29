@@ -1,8 +1,9 @@
-import React, { ChangeEvent } from "react"
-import { useFilterContext } from "../../../State/context"
 import { Expression } from "@saleor/macaw-ui/next"
-import { NumberOperand, RangeOperand } from "../../../State/types"
+import React, { ChangeEvent } from "react"
+
+import { useFilterContext } from "../../../State/context"
 import { isRangeOperand } from "../../../State/guards"
+import { NumberOperand, RangeOperand } from "../../../State/types"
 
 const Single = ({ operand }: { operand: NumberOperand }) => {
   const context = useFilterContext()

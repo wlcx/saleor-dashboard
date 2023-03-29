@@ -11,6 +11,7 @@ import { FilterState } from "../../State/types";
 import { FilterKindDropdown } from "./FilterKindDropdown";
 import { filterKindReducer } from "./filterKindReducer";
 import { OperandFactory } from "./OperandFactory";
+import { conditionReducer } from "./conditionReducer";
 
 const FilterExpressions = () => {
   const { filters } = useFilterContext();
@@ -41,6 +42,10 @@ const reducer = (state: FilterState, action: FilterAction): FilterState => {
 
   if (action.type === "CHANGE_FILTER_KIND") {
     return filterKindReducer(state, action);
+  }
+
+  if (action.type === "CHANGE_CONDITION") {
+    return conditionReducer(state, action);
   }
 
   return reducedState;

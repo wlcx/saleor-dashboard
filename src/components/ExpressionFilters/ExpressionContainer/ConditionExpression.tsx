@@ -1,7 +1,8 @@
-import React from "react"
 import { Expression } from "@saleor/macaw-ui/next"
-import { Condition as ConditionObject, ConditionValue } from "../State/types"
+import React from "react"
+
 import { useFilterContext } from "../State/context"
+import { Condition as ConditionObject, ConditionValue } from "../State/types"
 
 
 export const ConditionExpression = ({ condition }: { condition: ConditionObject }) => {

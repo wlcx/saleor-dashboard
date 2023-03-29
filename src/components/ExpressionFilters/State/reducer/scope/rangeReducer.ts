@@ -3,7 +3,7 @@ import { isMatchRightOperand } from "../../guards"
 import { FilterState } from "../../types"
 
 export const rangeReducer = (state: FilterState, action: ChangeRangeAction): FilterState => state.map((item) => {
-  if (!isMatchRightOperand(item, action.payload.operand)) return item
+  if (!isMatchRightOperand(item, action.payload.operand)) {return item}
 
   return {
     ...item,

@@ -14,25 +14,21 @@ interface TokenizedState {
 
 const SPECIAL_CHAR = "*"
 
-const isCommaRemovalAttempt = (currentValue: string, event: KeyboardEvent<HTMLInputElement>) => {  
-  const valueIndex = event.target.selectionStart - 1
 
-  if (event.code !== "Backspace") return false
+const isCommaRemovalAttempt = (currentValue: string, event: KeyboardEvent<HTMLInputElement>) => {  
+  const target = event.target as HTMLInputElement;
+  const valueIndex = target.selectionStart - 1
+
+  if (event.code !== "Backspace") {return false}
 
   return currentValue.charAt(valueIndex) === ","
 }
 
-const markEditionPlace = (currentValue: string, selection: number) => {
-  return `${currentValue.slice(0, selection)}${SPECIAL_CHAR}${currentValue.slice(selection)}`
-}
+const markEditionPlace = (currentValue: string, selection: number) => `${currentValue.slice(0, selection)}${SPECIAL_CHAR}${currentValue.slice(selection)}`
 
-const isMarkedPlace = (element: string) => {
-  return element.includes(SPECIAL_CHAR)
-}
+const isMarkedPlace = (element: string) => element.includes(SPECIAL_CHAR)
 
-const cleanMark = (element: string) => {
-  return element.replace(SPECIAL_CHAR, "")
-}
+const cleanMark = (element: string) => element.replace(SPECIAL_CHAR, "")
 
 const cleanToDirty = (el: string) => {
   if (isMarkedPlace(el)) {
@@ -42,22 +38,16 @@ const cleanToDirty = (el: string) => {
   return { isDirty: false, value: el }
 }
 
-const valueToToken = (el: Value) => {
-  return { isDirty: false, value: el.displayName }
-}
+const valueToToken = (el: Value) => ({ isDirty: false, value: el.displayName })
 
 
-const valueToString = (el: Value) => {
-  return el.displayName
-}
+const valueToString = (el: Value) => el.displayName
 
-const createTokensFromSelected = (initialValue: Value[]) => {
-  return initialValue
+const createTokensFromSelected = (initialValue: Value[]) => initialValue
     .map(valueToToken)
-}
 
 const createStringValueFromSelected = (initialValue: Value[]) => {
-  if (initialValue.length == 0) return ""
+  if (initialValue.length == 0) {return ""}
 
   return initialValue
     .map(valueToString)
@@ -65,49 +55,31 @@ const createStringValueFromSelected = (initialValue: Value[]) => {
     + ","
 }
 
-const generateDirtyTokens = (editedValue: string) => {
-  return editedValue
+const generateDirtyTokens = (editedValue: string) => editedValue
     .split(",")
     .map(cleanToDirty)
-}
 
-const cleanDirtyToken = (tokens: Token[], value: string) => {
-  return tokens.map(tk => {
+const cleanDirtyToken = (tokens: Token[], value: string) => tokens.map(tk => {
     if (tk.isDirty) {
       return { isDirty: false, value }
     }
 
     return tk
   })
-}
 
-const generateValueFromTokens = (tokensValues: string[]) => {
-  return tokensValues.join(",") + ","
-}
+const generateValueFromTokens = (tokensValues: string[]) => tokensValues.join(",") + ","
 
-const obtainCleanTokens = (tokens: Token[]) => {
-  return tokens.filter(t => !t.isDirty)
-}
+const obtainCleanTokens = (tokens: Token[]) => tokens.filter(t => !t.isDirty)
 
-const obtainCleanSelected = (selected: Value[], tokenValues: string[]) => {
-  return selected.filter(byTokenValues(tokenValues))
-}
+const obtainCleanSelected = (selected: Value[], tokenValues: string[]) => selected.filter(byTokenValues(tokenValues))
 
-const obtainTokenValues = (tokens: Token[]) => {
-  return tokens.filter(t => t.value).map(t => t.value)
-}
+const obtainTokenValues = (tokens: Token[]) => tokens.filter(t => t.value).map(t => t.value)
 
-const obtainSearchInput = (tokens: Token[]) => {
-  return tokens.find(t => t.isDirty)?.value || ""
-}
+const obtainSearchInput = (tokens: Token[]) => tokens.find(t => t.isDirty)?.value || ""
 
-const obtainNonEmptyTokens = (tokens) => {
-  return tokens.filter(t => t.value.length > 0)
-}
+const obtainNonEmptyTokens = (tokens) => tokens.filter(t => t.value.length > 0)
 
-const byTokenValues = (tokensValues: string[]) => (el: Value) => {
-  return tokensValues.includes(el.displayName)
-}
+const byTokenValues = (tokensValues: string[]) => (el: Value) => tokensValues.includes(el.displayName)
 
 export const useTokenizedValue = (initial: Value[]) => {
   const [tokenizedState, setTokenizedState] = useState<TokenizedState>({

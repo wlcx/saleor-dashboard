@@ -1,6 +1,7 @@
 import React from "react"
-import { AttributeDropdownOperand, CategoryOperand, ChannelOperand, CollectionOperand, EmptyOperand, PriceOperand, ProductTypeOperand } from "./DataTypeOperands"
+
 import { Operand } from "../../State/types"
+import { AttributeDropdownOperand, CategoryOperand, ChannelOperand, CollectionOperand, EmptyOperand, PriceOperand, ProductTypeOperand } from "./DataTypeOperands"
 
 interface OperandFactoryProps {
   operand: Operand

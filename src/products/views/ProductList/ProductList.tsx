@@ -2,6 +2,8 @@ import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import { mapFilterToFilterQueryParams } from "@dashboard/components/ExpressionFilters/State/maps/product";
+import { FilterState} from "@dashboard/components/ExpressionFilters/State/types";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
 } from "@dashboard/components/SaveFilterTabDialog";
@@ -68,7 +70,7 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
-import ProductListPage, { createFilterStructure } from "../../components/ProductListPage";
+import ProductListPage from "../../components/ProductListPage";
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -81,9 +83,6 @@ import {
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
-import { FilterState} from "@dashboard/components/ExpressionFilters/State/types";
-import { mapFilterStateToInput, mapFilterToFilterQueryParams } from "@dashboard/components/ExpressionFilters/State/maps/product";
-import useFilter from "@dashboard/components/Filter/useFilter";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -224,7 +223,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   });
 
   
-  const [changeFilters, resetFilters, handleSearchChange] =
+  const [_, resetFilters, handleSearchChange] =
   createFilterHandlers({
     cleanupFn: reset,
     createUrl: productListUrl,
@@ -385,7 +384,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             availableInGridAttributesOpts.result?.data?.availableInGrid,
           ) || []
         }
-        currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}

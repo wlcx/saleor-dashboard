@@ -1,6 +1,4 @@
 import { InitAction } from ".."
 import { FilterState } from "../../types"
 
-export const initReducer = (state: FilterState, action: InitAction): FilterState => {
-  return action.payload.filters
-}
+export const initReducer = (_, action: InitAction): FilterState => action.payload.filters
