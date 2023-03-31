@@ -1,6 +1,6 @@
 import { isMatchFilterKind } from "../../State/guards";
 import { ChangeFilterKindAction } from "../../State/reducer";
-import { defaultConditionForKind } from "../../State/reducer/condition";
+import { defaultConditionForKind } from "./condition";
 import { FilterState } from "../../State/types";
 import { defaultRightOperandForKind } from "./rightOperand";
 

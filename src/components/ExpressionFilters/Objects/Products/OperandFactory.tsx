@@ -1,13 +1,14 @@
 import React from "react"
 
-import { Operand } from "../../State/types"
-import { AttributeDropdownOperand, CategoryOperand, ChannelOperand, CollectionOperand, EmptyOperand, PriceOperand, ProductTypeOperand } from "./DataTypeOperands"
+import { FilterKind, Operand } from "../../State/types"
+import { AttributeBooleanOperand, AttributeDropdownOperand, AttributeNumericOperand, CategoryOperand, ChannelOperand, CollectionOperand, EmptyOperand, PriceOperand, ProductTypeOperand } from "./DataTypeOperands"
 
 interface OperandFactoryProps {
   operand: Operand
+  kind: FilterKind
 }
 
-export const OperandFactory = ({ operand }: OperandFactoryProps) => {
+export const OperandFactory = ({ operand, kind }: OperandFactoryProps) => {
   if (operand.dataType === "category" && operand.type === "autocomplete") {
     return (
       <CategoryOperand operand={operand} />
@@ -38,11 +39,24 @@ export const OperandFactory = ({ operand }: OperandFactoryProps) => {
     )
   }
 
-  if (operand.dataType === "attr:DROPDOWN" && operand.type === "dropdown") {
+  if (operand.dataType === "attr:DROPDOWN" && operand.type === "autocomplete") {
     return (
-      <AttributeDropdownOperand operand={operand} />
+      <AttributeDropdownOperand operand={operand} kind={kind} />
     )
   }
+
+  if (operand.dataType === "attr:BOOLEAN" && operand.type === "dropdown") {
+    return (
+      <AttributeBooleanOperand operand={operand} />
+    )
+  }
+
+  if (operand.dataType === "attr:NUMERIC" && (operand.type === "number" || operand.type === "range")) {
+    return (
+      <AttributeNumericOperand operand={operand} />
+    )
+  }
+
 
   return <EmptyOperand />
 }

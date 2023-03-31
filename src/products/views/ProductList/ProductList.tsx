@@ -2,7 +2,6 @@ import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import { mapFilterToFilterQueryParams } from "@dashboard/components/ExpressionFilters/State/maps/product";
 import { FilterState} from "@dashboard/components/ExpressionFilters/State/types";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -83,6 +82,7 @@ import {
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
+import { mapFilterToFilterQueryParams } from "@dashboard/components/ExpressionFilters/Objects/Products/maps";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;

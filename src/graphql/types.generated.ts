@@ -9190,6 +9190,16 @@ export type AutocompleteFiltersCollectionsQueryVariables = Exact<{
 
 export type AutocompleteFiltersCollectionsQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null };
 
+export type LoadAttributeValuesQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  after?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+}>;
+
+
+export type LoadAttributeValuesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null };
+
 export type InitialProductFilterCollectionsQueryVariables = Exact<{
   collections?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;

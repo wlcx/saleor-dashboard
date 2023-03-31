@@ -75,6 +75,26 @@ export const autocompleteFiltersCollectionsQuery = gql`
   }
 `;
 
+export const loadFiltersAttributesQuery = gql`
+  query LoadAttributeValues(
+    $id: ID
+    $after: String
+    $search: String
+    $first: Int!
+  ) {
+    attribute(id: $id) {
+      id
+      choices(after: $after, first: $first, filter: { search: $search }) {
+        edges {
+          node {
+            ...AttributeValueDetails
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const initialProductFilterCollectionsQuery = gql`
   query InitialProductFilterCollections($collections: [ID!]) {
     collections(first: 100, filter: { ids: $collections }) {

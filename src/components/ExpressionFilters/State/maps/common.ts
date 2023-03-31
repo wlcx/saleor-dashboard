@@ -3,23 +3,39 @@ import {
   AutocompleteFiltersCollectionsQuery,
   AutocompleteFiltersProductTypesQuery,
   ChannelFragment,
-  InitialProductFilterAttributesQuery} from "@dashboard/graphql"
+  InitialProductFilterAttributesQuery,
+  LoadAttributeValuesQuery} from "@dashboard/graphql"
 
 import { DataType, Value } from "../types"
 
 export type AttributEdge = InitialProductFilterAttributesQuery["attributes"]["edges"][number]
+export type AttributeCoutanleEdge = LoadAttributeValuesQuery["attribute"]["choices"]["edges"][number]
 export type CategoryEdge = AutocompleteFiltersCategoriesQuery["categories"]["edges"][number]
 export type ProductTypeEdge = AutocompleteFiltersProductTypesQuery["productTypes"]["edges"][number]
 export type CollectionEdge = AutocompleteFiltersCollectionsQuery["collections"]["edges"][number]
 
-export const toAttributeValue = (edge: AttributEdge): Value => {
-  const { id, name, inputType } = edge.node
+
+export const toAttributeValueCountable = (dataType: DataType) => (countableEdge: AttributeCoutanleEdge): Value => {
+  const { id, name, slug } = countableEdge.node
 
   return {
     id,
     name,
     displayName: `${name} (not supported)`,
-    dataType: `attr:${inputType}` as DataType
+    dataType,
+    slug
+  }
+}
+
+export const toAttributeValue = (edge: AttributEdge): Value => {
+  const { id, name, inputType, slug } = edge.node
+
+  return {
+    id,
+    name,
+    displayName: `${name} (${inputType})`,
+    dataType: `attr:${inputType}` as DataType,
+    slug
   }
 }
 

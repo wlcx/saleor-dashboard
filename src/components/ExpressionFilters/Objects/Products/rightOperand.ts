@@ -46,9 +46,10 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
 
   if (kindValue.dataType === "attr:DROPDOWN") {
     return {
-      type: "dropdown",
+      type: "autocomplete",
       dataType: kindValue.dataType,
-      selected: null,
+      selected: [],
+      typedPhase: "",
     };
   }
 

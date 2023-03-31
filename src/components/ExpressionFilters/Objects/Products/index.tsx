@@ -16,6 +16,8 @@ import { conditionReducer } from "./conditionReducer";
 const FilterExpressions = () => {
   const { filters } = useFilterContext();
 
+  console.log("FilterExpressions", filters)
+
   return (
     <Groups>
       {filters.filter(isExpression).map((filter, index) => (
@@ -23,7 +25,7 @@ const FilterExpressions = () => {
           <Expression>
             <FilterKindDropdown filterKind={filter.filterKind} />
             <ConditionExpression condition={filter.condition} />
-            <OperandFactory operand={filter.rightOperand} />
+            <OperandFactory operand={filter.rightOperand} kind={filter.filterKind} />
             <RemoveButton filterKind={filter.filterKind} />
           </Expression>
         </Groups.Item>

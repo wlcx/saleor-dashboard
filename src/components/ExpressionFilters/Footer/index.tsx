@@ -22,17 +22,13 @@ interface FooterProps {
 }
 
 export const Footer = ({ onShowClick }: FooterProps) => {
-  const { addEmptyExpression, filters } = useFilterContext()
-
-  const handleClear = () => {
-    console.log("clearing filters...")
-  }
+  const { addEmptyExpression, clear, filters } = useFilterContext()
 
   return (
     <FooterContainer>
       <Button variant="secondary" onClick={addEmptyExpression}>Add filter</Button>
       <Box display="flex">
-        <Button onClick={handleClear} variant="tertiary">Clear filters</Button>
+        <Button onClick={clear} variant="tertiary">Clear filters</Button>
         <Button onClick={() => onShowClick(filters)}>Show results</Button>
       </Box>
     </FooterContainer>

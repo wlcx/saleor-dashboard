@@ -12808,6 +12808,51 @@ export function useAutocompleteFiltersCollectionsLazyQuery(baseOptions?: ApolloR
 export type AutocompleteFiltersCollectionsQueryHookResult = ReturnType<typeof useAutocompleteFiltersCollectionsQuery>;
 export type AutocompleteFiltersCollectionsLazyQueryHookResult = ReturnType<typeof useAutocompleteFiltersCollectionsLazyQuery>;
 export type AutocompleteFiltersCollectionsQueryResult = Apollo.QueryResult<Types.AutocompleteFiltersCollectionsQuery, Types.AutocompleteFiltersCollectionsQueryVariables>;
+export const LoadAttributeValuesDocument = gql`
+    query LoadAttributeValues($id: ID, $after: String, $search: String, $first: Int!) {
+  attribute(id: $id) {
+    id
+    choices(after: $after, first: $first, filter: {search: $search}) {
+      edges {
+        node {
+          ...AttributeValueDetails
+        }
+      }
+    }
+  }
+}
+    ${AttributeValueDetailsFragmentDoc}`;
+
+/**
+ * __useLoadAttributeValuesQuery__
+ *
+ * To run a query within a React component, call `useLoadAttributeValuesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoadAttributeValuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLoadAttributeValuesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      search: // value for 'search'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useLoadAttributeValuesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.LoadAttributeValuesQuery, Types.LoadAttributeValuesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.LoadAttributeValuesQuery, Types.LoadAttributeValuesQueryVariables>(LoadAttributeValuesDocument, options);
+      }
+export function useLoadAttributeValuesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.LoadAttributeValuesQuery, Types.LoadAttributeValuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.LoadAttributeValuesQuery, Types.LoadAttributeValuesQueryVariables>(LoadAttributeValuesDocument, options);
+        }
+export type LoadAttributeValuesQueryHookResult = ReturnType<typeof useLoadAttributeValuesQuery>;
+export type LoadAttributeValuesLazyQueryHookResult = ReturnType<typeof useLoadAttributeValuesLazyQuery>;
+export type LoadAttributeValuesQueryResult = Apollo.QueryResult<Types.LoadAttributeValuesQuery, Types.LoadAttributeValuesQueryVariables>;
 export const InitialProductFilterCollectionsDocument = gql`
     query InitialProductFilterCollections($collections: [ID!]) {
   collections(first: 100, filter: {ids: $collections}) {

@@ -45,7 +45,7 @@ export const Autocomplete = ({ operand, items, placeholder, onChange, onSelect }
   }
   
   useEffect(() => {
-    if (!selected.length) {return}
+    if (!selected.length) return
 
     onSelect(operand, selected)
   }, [selected])

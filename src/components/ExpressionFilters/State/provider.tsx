@@ -29,6 +29,8 @@ export const Provider = ({ children, reducer, filter }: ProviderProps) => {
   const [filters, dispatch] = useReducer(reducer, filter);
 
   useEffect(() => {
+    if (filter.length === filters.length) return
+    console.log("FILTER CHANGED", filter)
     dispatch({ type: "INIT", payload: { filters: filter } });
   }, [filter]);
 
@@ -41,6 +43,11 @@ export const Provider = ({ children, reducer, filter }: ProviderProps) => {
 
   const addEmptyExpression = () => {
     dispatch({ type: "ADD_EMPTY" });
+  };
+
+
+  const clear = () => {
+    dispatch({ type: "CLEAR" });
   };
 
   const changeDropdownOperand = (operand: DropdownOperand, newValue: Value) => {
@@ -91,6 +98,7 @@ export const Provider = ({ children, reducer, filter }: ProviderProps) => {
     <FilterContext.Provider
       value={{
         filters,
+        clear,
         changeFilterKind,
         addEmptyExpression,
         changeCondition,

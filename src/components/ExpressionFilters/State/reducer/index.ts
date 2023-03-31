@@ -29,6 +29,11 @@ export interface InitAction {
   payload: { filters: FilterState };
 }
 
+export interface ClearAction {
+  type: "CLEAR"
+}
+
+
 export interface ChangeFilterKindAction {
   type: "CHANGE_FILTER_KIND";
   payload: { currentKind: FilterKind; newValue: Value };
@@ -72,6 +77,7 @@ export interface RemoveExpressionAction {
 export type FilterAction =
   | AddEmptyAaction
   | InitAction
+  | ClearAction
   | ChangeFilterKindAction
   | ChangeDropdownAction
   | ChangeAutocompleteAction
@@ -87,18 +93,35 @@ export const filterReducer = (
 ): FilterState => {
   switch (action.type) {
     case "ADD_EMPTY":
+      console.log("ADD_EMPTY")
       return emptyReducer(state);
+    case "CLEAR":
+      console.log("CLEAR")
+
+      return [];
     case "INIT":
+      console.log("INIT", action.payload)
+
       return initReducer(state, action);
     case "CHANGE_DROPDOWN":
+      console.log("CHANGE_DROPDOWN")
+
       return dropdownReducer(state, action);
     case "CHANGE_AUTOCOMPLETE":
+      console.log("CHANGE_AUTOCOMPLETE")
+
       return autocompleteReducer(state, action);
     case "CHANGE_NUMBER":
+      console.log("CHANGE_NUMBER")
+
       return numberReducer(state, action);
     case "CHANGE_RANGE":
+      console.log("CHANGE_RANGE")
+
       return rangeReducer(state, action);
     case "REMOVE_EXPRESSION":
+      console.log("REMOVE_EXPRESSION")
+
       return expressionReducer(state, action);
     default:
       return state;

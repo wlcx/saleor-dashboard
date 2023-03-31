@@ -13,6 +13,7 @@ export interface FilterContextState {
   changeNumberOperand: (operand: NumberOperand, newValue: number) => void
   changeTextOperand: (operand: TextOperand, newValue: string) => void
   removeExpression: (currentKind: FilterKind) => void
+  clear: () => void
 }
 
 export const FilterContext = createContext<FilterContextState>(null)

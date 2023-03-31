@@ -7,7 +7,6 @@ import {
 import { FilterBar } from "@dashboard/components/AppLayout/FilterBar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
-import { mapFilterOptsToFilterState } from "@dashboard/components/ExpressionFilters/State/maps/product";
 import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -47,6 +46,7 @@ import {
   ProductFilterKeys,
   ProductListFilterOpts,
 } from "./filters";
+import { mapFilterOptsToFilterState } from "@dashboard/components/ExpressionFilters/Objects/Products/maps";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,

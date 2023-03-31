@@ -1,4 +1,4 @@
-import { Condition, Value } from "../types"
+import { Condition, Value } from "../../State/types"
 
 
 export const defaultConditionForKind = (kindValue: Value): Condition => {

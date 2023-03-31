@@ -35,8 +35,9 @@ export interface Condition {
 export interface Value {
   id: string
   name: string
-  displayName: string
+  displayName?: string
   dataType: DataType
+  slug?: string
 }
 
 export interface DropdownOperand {

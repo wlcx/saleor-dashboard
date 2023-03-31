@@ -3,7 +3,9 @@ import React from "react";
 
 import { FilterKindSelecor } from "../../ExpressionContainer/FilterKindSelector";
 import { toAttributeValue } from "../../State/maps";
-import { FilterKind, Value } from "../../State/types";
+import { FilterKind, FilterState, Value } from "../../State/types";
+import { useFilterContext } from "../../State/context";
+import { isExpression } from "../../State/guards";
 
 interface ExpressionContainerProps {
   filterKind: FilterKind;
@@ -37,14 +39,23 @@ const staticChoices: Value[] = [
   },
 ];
 
+const byAlreadySelected = (filters: FilterState) => (current: Value) => {
+  return !filters
+    .filter(isExpression)
+    .some(f => f.filterKind.selected.id === current.id)
+}
+
 const useFilterKindOptions = () => {
+  const { filters } = useFilterContext();
+
   const { data: attributesData, loading: attributesLoading } =
     useInitialProductFilterAttributesQuery();
 
-  const attributeValues = attributesData.attributes.edges.map(toAttributeValue);
-
   const loading = attributesLoading;
-  const choices = staticChoices.concat(attributeValues);
+  const attributeValues = attributesData.attributes.edges.map(toAttributeValue);
+  const choices = staticChoices
+    .concat(attributeValues)
+    .filter(byAlreadySelected(filters));
 
   return {
     loading,
