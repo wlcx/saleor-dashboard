@@ -4,82 +4,89 @@ import {
   AutocompleteFiltersProductTypesQuery,
   ChannelFragment,
   InitialProductFilterAttributesQuery,
-  LoadAttributeValuesQuery} from "@dashboard/graphql"
+  LoadAttributeValuesQuery,
+} from "@dashboard/graphql";
 
-import { DataType, Value } from "../types"
+import { attrDataType, DataType, Value } from "../types";
 
-export type AttributEdge = InitialProductFilterAttributesQuery["attributes"]["edges"][number]
-export type AttributeCoutanleEdge = LoadAttributeValuesQuery["attribute"]["choices"]["edges"][number]
-export type CategoryEdge = AutocompleteFiltersCategoriesQuery["categories"]["edges"][number]
-export type ProductTypeEdge = AutocompleteFiltersProductTypesQuery["productTypes"]["edges"][number]
-export type CollectionEdge = AutocompleteFiltersCollectionsQuery["collections"]["edges"][number]
+export type AttributEdge =
+  InitialProductFilterAttributesQuery["attributes"]["edges"][number];
+export type AttributeCoutanleEdge =
+  LoadAttributeValuesQuery["attribute"]["choices"]["edges"][number];
+export type CategoryEdge =
+  AutocompleteFiltersCategoriesQuery["categories"]["edges"][number];
+export type ProductTypeEdge =
+  AutocompleteFiltersProductTypesQuery["productTypes"]["edges"][number];
+export type CollectionEdge =
+  AutocompleteFiltersCollectionsQuery["collections"]["edges"][number];
 
+export const toAttributeValueCountable =
+  (dataType: DataType) =>
+  (countableEdge: AttributeCoutanleEdge): Value => {
+    const { id, name, slug } = countableEdge.node;
 
-export const toAttributeValueCountable = (dataType: DataType) => (countableEdge: AttributeCoutanleEdge): Value => {
-  const { id, name, slug } = countableEdge.node
-
-  return {
-    id,
-    name,
-    displayName: `${name} (not supported)`,
-    dataType,
-    slug
-  }
-}
+    return {
+      id,
+      name,
+      displayName: `${name} (not supported)`,
+      dataType,
+      slug,
+    };
+  };
 
 export const toAttributeValue = (edge: AttributEdge): Value => {
-  const { id, name, inputType, slug } = edge.node
+  const { id, name, inputType, slug } = edge.node;
 
   return {
     id,
     name,
     displayName: `${name} (${inputType})`,
-    dataType: `attr:${inputType}` as DataType,
-    slug
-  }
-}
+    dataType: attrDataType(inputType),
+    slug,
+  };
+};
 
 export const toCategoryValue = (edge: CategoryEdge): Value => {
-  const { id, name } = edge.node
+  const { id, name } = edge.node;
 
   return {
     id,
     name,
     displayName: name,
-    dataType: "category"
-  }
-}
+    dataType: "category",
+  };
+};
 
 export const toChannelValue = (edge: ChannelFragment): Value => {
-  const { id, name } = edge
+  const { id, name, slug } = edge;
 
   return {
     id,
     name,
     displayName: name,
-    dataType: "channel"
-  }
-}
+    dataType: "channel",
+    slug,
+  };
+};
 
 export const toProductTypeValue = (edge: ProductTypeEdge): Value => {
-  const { id, name } = edge.node
+  const { id, name } = edge.node;
 
   return {
     id,
     name,
     displayName: name,
-    dataType: "product-type"
-  }
-}
+    dataType: "product-type",
+  };
+};
 
 export const toCollectionValue = (edge: CollectionEdge): Value => {
-  const { id, name } = edge.node
+  const { id, name } = edge.node;
 
   return {
     id,
     name,
     displayName: name,
-    dataType: "collection"
-  }
-}
-
+    dataType: "collection",
+  };
+};

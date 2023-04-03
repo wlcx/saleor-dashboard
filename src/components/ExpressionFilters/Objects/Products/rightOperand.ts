@@ -1,4 +1,10 @@
-import { ConditionValue, FilterKind, Operand, Value } from "../../State/types";
+import {
+  attrDataType,
+  ConditionValue,
+  FilterKind,
+  Operand,
+  Value,
+} from "../../State/types";
 
 export const defaultRightOperandForKind = (kindValue: Value): Operand => {
   if (kindValue.dataType === "category") {
@@ -44,7 +50,7 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
     };
   }
 
-  if (kindValue.dataType === "attr:DROPDOWN") {
+  if (kindValue.dataType === attrDataType("DROPDOWN")) {
     return {
       type: "autocomplete",
       dataType: kindValue.dataType,
@@ -53,7 +59,7 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
     };
   }
 
-  if (kindValue.dataType === "attr:MULTISELECT") {
+  if (kindValue.dataType === attrDataType("MULTISELECT")) {
     return {
       type: "autocomplete",
       dataType: kindValue.dataType,
@@ -62,7 +68,7 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
     };
   }
 
-  if (kindValue.dataType === "attr:NUMERIC") {
+  if (kindValue.dataType === attrDataType("NUMERIC")) {
     return {
       type: "number",
       dataType: kindValue.dataType,
@@ -70,7 +76,7 @@ export const defaultRightOperandForKind = (kindValue: Value): Operand => {
     };
   }
 
-  if (kindValue.dataType === "attr:BOOLEAN") {
+  if (kindValue.dataType === attrDataType("BOOLEAN")) {
     return {
       type: "dropdown",
       dataType: kindValue.dataType,
@@ -97,7 +103,9 @@ export const defaultRightOperandForCondition = (
   kindValue: FilterKind,
   newCondition: ConditionValue,
 ): Operand => {
-  if (["price", "attr:NUMERIC"].includes(kindValue.selected.dataType)) {
+  if (
+    ["price", attrDataType("NUMERIC")].includes(kindValue.selected.dataType)
+  ) {
     if (newCondition === "is between") {
       return {
         type: "range",

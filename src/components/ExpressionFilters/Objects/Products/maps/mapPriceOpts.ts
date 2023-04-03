@@ -1,28 +1,37 @@
-import { FilterExpression, NumberOperand, RangeOperand } from "@dashboard/components/ExpressionFilters/State/types"
-import { ProductListFilterOpts } from "@dashboard/products/components/ProductListPage"
+import {
+  FilterExpression,
+  NumberOperand,
+  RangeOperand,
+} from "@dashboard/components/ExpressionFilters/State/types";
+import { ProductListFilterOpts } from "@dashboard/products/components/ProductListPage";
 
-type Price = ProductListFilterOpts["price"]
+import { price } from "../value";
 
-export const mapPriceOpts = (price: Price): FilterExpression => {
-  const rightOperand = price.value.max === "0" ? {
-    type: "number",
-    dataType: "price",
-    value: parseFloat(price.value.min),
-  } as NumberOperand: {
-    type: "range",
-    dataType: "price",
-    left: parseFloat(price.value.min),
-    right: parseFloat(price.value.max),
-  } as RangeOperand
+type Price = ProductListFilterOpts["price"];
+
+export const mapPriceOpts = (givenPrice: Price): FilterExpression => {
+  const rightOperand =
+    givenPrice.value.max === "0"
+      ? ({
+          type: "number",
+          dataType: "price",
+          value: parseFloat(givenPrice.value.min),
+        } as NumberOperand)
+      : ({
+          type: "range",
+          dataType: "price",
+          left: parseFloat(givenPrice.value.min),
+          right: parseFloat(givenPrice.value.max),
+        } as RangeOperand);
 
   return {
     filterKind: {
-      selected: { id: "price", name: "price", displayName: "Price", dataType: "price" }
+      selected: price(),
     },
     condition: {
       selected: "is",
-      choices: ["is", "is between"]
+      choices: ["is", "is between"],
     },
-    rightOperand
-  }
-}
+    rightOperand,
+  };
+};

@@ -1,18 +1,22 @@
-import { FilterExpression } from "@dashboard/components/ExpressionFilters/State/types"
-import { ProductListFilterOpts } from "@dashboard/products/components/ProductListPage"
+import { FilterExpression } from "@dashboard/components/ExpressionFilters/State/types";
+import { ProductListFilterOpts } from "@dashboard/products/components/ProductListPage";
 
-type Channel = ProductListFilterOpts["channel"]
+import { channel } from "../value";
 
-export const mapChannelOpts = (channel: Channel): FilterExpression => {
-  const { id, label } = channel.choices.find(ch => ch.id === channel.value)
+type Channel = ProductListFilterOpts["channel"];
+
+export const mapChannelOpts = (givenChannel: Channel): FilterExpression => {
+  const { id, label, value } = givenChannel.choices.find(
+    ch => ch.value === givenChannel.value,
+  );
 
   return {
     filterKind: {
-      selected: { id: "channel", name: "channel", displayName: "channel", dataType: "channel" }
+      selected: channel(),
     },
     condition: {
       selected: "is",
-      choices: ["is"]
+      choices: ["is"],
     },
     rightOperand: {
       type: "dropdown",
@@ -21,8 +25,9 @@ export const mapChannelOpts = (channel: Channel): FilterExpression => {
         id,
         name: label,
         displayName: label,
-        dataType: "channel"
-      }
-    }
-  }
-}
+        slug: value,
+        dataType: "channel",
+      },
+    },
+  };
+};

@@ -1,17 +1,16 @@
-import React, { ChangeEvent } from "react"
-// import { useFilterContext } from "../../../../State/context"
-import {  NumberOperand, RangeOperand } from "../../../../State/types"
-import { Expression } from "@saleor/macaw-ui/next"
-import { useFilterContext } from "@dashboard/components/ExpressionFilters/State/context"
-import { isRangeOperand } from "@dashboard/components/ExpressionFilters/State/guards"
+import { useFilterContext } from "@dashboard/components/ExpressionFilters/State/context";
+import { isRangeOperand } from "@dashboard/components/ExpressionFilters/State/guards";
+import { Expression } from "@saleor/macaw-ui/next";
+import React, { ChangeEvent } from "react";
 
+import { NumberOperand, RangeOperand } from "../../../../State/types";
 
 const Single = ({ operand }: { operand: NumberOperand }) => {
-  const context = useFilterContext()
+  const context = useFilterContext();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    context.changeNumberOperand(operand, parseFloat(event.target.value))
-  }
+    context.changeNumberOperand(operand, parseFloat(event.target.value));
+  };
 
   return (
     <Expression.OperandNumber
@@ -20,19 +19,27 @@ const Single = ({ operand }: { operand: NumberOperand }) => {
       value={operand.value as unknown as string}
       placeholder="Set value"
     />
-  )
-}
+  );
+};
 
 const Range = ({ operand }: { operand: RangeOperand }) => {
-  const context = useFilterContext()
+  const context = useFilterContext();
 
   const handleChangeFrom = (event: ChangeEvent<HTMLInputElement>) => {
-    context.changeRangeOperand(operand, parseFloat(event.target.value), operand.right)
-  }
+    context.changeRangeOperand(
+      operand,
+      parseFloat(event.target.value),
+      operand.right,
+    );
+  };
 
   const handleChangeTo = (event: ChangeEvent<HTMLInputElement>) => {
-    context.changeRangeOperand(operand, operand.left, parseFloat(event.target.value))
-  }
+    context.changeRangeOperand(
+      operand,
+      operand.left,
+      parseFloat(event.target.value),
+    );
+  };
 
   return (
     <Expression.OperandRange
@@ -44,15 +51,17 @@ const Range = ({ operand }: { operand: RangeOperand }) => {
       from={operand.left as unknown as string}
       to={operand.right as unknown as string}
     />
-  )
-}
+  );
+};
 
-
-export const AttributeNumericOperand = ({ operand }: { operand: NumberOperand | RangeOperand }) => {
+export const AttributeNumericOperand = ({
+  operand,
+}: {
+  operand: NumberOperand | RangeOperand;
+}) => {
   if (isRangeOperand(operand)) {
-    return (<Range operand={operand} />)
+    return <Range operand={operand} />;
   }
 
-  return (<Single operand={operand} />)
-}
-
+  return <Single operand={operand} />;
+};

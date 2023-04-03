@@ -2,7 +2,8 @@ import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import { FilterState} from "@dashboard/components/ExpressionFilters/State/types";
+import { mapFilterToFilterQueryParams } from "@dashboard/components/ExpressionFilters/Objects/Products/maps";
+import { FilterState } from "@dashboard/components/ExpressionFilters/State/types";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
 } from "@dashboard/components/SaveFilterTabDialog";
@@ -82,7 +83,6 @@ import {
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
-import { mapFilterToFilterQueryParams } from "@dashboard/components/ExpressionFilters/Objects/Products/maps";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -222,16 +222,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
-  
-  const [_, resetFilters, handleSearchChange] =
-  createFilterHandlers({
+  const [, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: productListUrl,
     getFilterQueryParam,
     navigate,
     params,
   });
-  
+
   const handleTabChange = (tab: number) => {
     reset();
     navigate(
@@ -239,9 +237,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         activeTab: tab.toString(),
         ...getFilterTabs()[tab - 1].data,
       }),
-      );
-    };
-    
+    );
+  };
 
   const handleFilterTabDelete = () => {
     deleteFilterTab(currentTab);
@@ -359,10 +356,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts,
   );
 
-
   const handleChangeFilters = (f: FilterState) => {
-    navigate(productListUrl(mapFilterToFilterQueryParams(f)))
-  }
+    navigate(productListUrl(mapFilterToFilterQueryParams(f)));
+  };
 
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
