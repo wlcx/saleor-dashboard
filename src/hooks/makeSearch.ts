@@ -8,7 +8,7 @@ import useDebounce from "./useDebounce";
 export interface SearchVariables {
   after?: string | null;
   first: number;
-  query?: string;
+  query: string;
 }
 
 export interface UseSearchResult<TData, TVariables extends SearchVariables> {
