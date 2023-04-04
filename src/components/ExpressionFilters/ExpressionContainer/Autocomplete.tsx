@@ -11,7 +11,7 @@ interface AutocompleteProps {
   items: Value[];
   onChange: (searchInput: string) => void;
   onSelect: (operand: AutocompleteOperand, selected: Value[]) => void;
-  onEnd: () => void;
+  onEnd?: () => void;
   loading?: boolean;
 }
 
