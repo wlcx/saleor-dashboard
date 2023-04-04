@@ -12683,18 +12683,68 @@ export function useInitialProductFilterCategoriesLazyQuery(baseOptions?: ApolloR
 export type InitialProductFilterCategoriesQueryHookResult = ReturnType<typeof useInitialProductFilterCategoriesQuery>;
 export type InitialProductFilterCategoriesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterCategoriesLazyQuery>;
 export type InitialProductFilterCategoriesQueryResult = Apollo.QueryResult<Types.InitialProductFilterCategoriesQuery, Types.InitialProductFilterCategoriesQueryVariables>;
+export const AutocompleteProductFilterAttributesDocument = gql`
+    query AutocompleteProductFilterAttributes($first: Int!, $after: String, $filter: AttributeFilterInput) {
+  search: attributes(first: $first, after: $after, filter: $filter) {
+    edges {
+      node {
+        id
+        name
+        inputType
+        slug
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${PageInfoFragmentDoc}`;
+
+/**
+ * __useAutocompleteProductFilterAttributesQuery__
+ *
+ * To run a query within a React component, call `useAutocompleteProductFilterAttributesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAutocompleteProductFilterAttributesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAutocompleteProductFilterAttributesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useAutocompleteProductFilterAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AutocompleteProductFilterAttributesQuery, Types.AutocompleteProductFilterAttributesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AutocompleteProductFilterAttributesQuery, Types.AutocompleteProductFilterAttributesQueryVariables>(AutocompleteProductFilterAttributesDocument, options);
+      }
+export function useAutocompleteProductFilterAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AutocompleteProductFilterAttributesQuery, Types.AutocompleteProductFilterAttributesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AutocompleteProductFilterAttributesQuery, Types.AutocompleteProductFilterAttributesQueryVariables>(AutocompleteProductFilterAttributesDocument, options);
+        }
+export type AutocompleteProductFilterAttributesQueryHookResult = ReturnType<typeof useAutocompleteProductFilterAttributesQuery>;
+export type AutocompleteProductFilterAttributesLazyQueryHookResult = ReturnType<typeof useAutocompleteProductFilterAttributesLazyQuery>;
+export type AutocompleteProductFilterAttributesQueryResult = Apollo.QueryResult<Types.AutocompleteProductFilterAttributesQuery, Types.AutocompleteProductFilterAttributesQueryVariables>;
 export const AutocompleteFiltersCategoriesDocument = gql`
-    query AutocompleteFiltersCategories($search: String, $ids: [ID!]) {
-  categories(first: 30, filter: {search: $search, ids: $ids}) {
+    query AutocompleteFiltersCategories($first: Int!, $after: String, $search: String, $ids: [ID!]) {
+  categories(first: $first, after: $after, filter: {search: $search, ids: $ids}) {
     edges {
       node {
         id
         name
       }
     }
+    pageInfo {
+      ...PageInfo
+    }
   }
 }
-    `;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useAutocompleteFiltersCategoriesQuery__
@@ -12708,12 +12758,14 @@ export const AutocompleteFiltersCategoriesDocument = gql`
  * @example
  * const { data, loading, error } = useAutocompleteFiltersCategoriesQuery({
  *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
  *      search: // value for 'search'
  *      ids: // value for 'ids'
  *   },
  * });
  */
-export function useAutocompleteFiltersCategoriesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AutocompleteFiltersCategoriesQuery, Types.AutocompleteFiltersCategoriesQueryVariables>) {
+export function useAutocompleteFiltersCategoriesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AutocompleteFiltersCategoriesQuery, Types.AutocompleteFiltersCategoriesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.AutocompleteFiltersCategoriesQuery, Types.AutocompleteFiltersCategoriesQueryVariables>(AutocompleteFiltersCategoriesDocument, options);
       }
@@ -12733,9 +12785,12 @@ export const AutocompleteFiltersProductTypesDocument = gql`
         name
       }
     }
+    pageInfo {
+      ...PageInfo
+    }
   }
 }
-    `;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useAutocompleteFiltersProductTypesQuery__
@@ -12775,9 +12830,12 @@ export const AutocompleteFiltersCollectionsDocument = gql`
         name
       }
     }
+    pageInfo {
+      ...PageInfo
+    }
   }
 }
-    `;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useAutocompleteFiltersCollectionsQuery__
@@ -12818,10 +12876,14 @@ export const LoadAttributeValuesDocument = gql`
           ...AttributeValueDetails
         }
       }
+      pageInfo {
+        ...PageInfo
+      }
     }
   }
 }
-    ${AttributeValueDetailsFragmentDoc}`;
+    ${AttributeValueDetailsFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useLoadAttributeValuesQuery__

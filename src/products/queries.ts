@@ -28,14 +28,48 @@ export const initialProductFilterCategoriesQuery = gql`
   }
 `;
 
+export const autocompleteProductFilterAttributesQuery = gql`
+  query AutocompleteProductFilterAttributes(
+    $first: Int!
+    $after: String
+    $filter: AttributeFilterInput
+  ) {
+    search: attributes(first: $first, after: $after, filter: $filter) {
+      edges {
+        node {
+          id
+          name
+          inputType
+          slug
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+`;
+
 export const autocompleteFiltersCategoriesQuery = gql`
-  query AutocompleteFiltersCategories($search: String, $ids: [ID!]) {
-    categories(first: 30, filter: { search: $search, ids: $ids }) {
+  query AutocompleteFiltersCategories(
+    $first: Int!
+    $after: String
+    $search: String
+    $ids: [ID!]
+  ) {
+    categories(
+      first: $first
+      after: $after
+      filter: { search: $search, ids: $ids }
+    ) {
       edges {
         node {
           id
           name
         }
+      }
+      pageInfo {
+        ...PageInfo
       }
     }
   }
@@ -54,6 +88,9 @@ export const autocompleteFiltersProductTypesQuery = gql`
           name
         }
       }
+      pageInfo {
+        ...PageInfo
+      }
     }
   }
 `;
@@ -70,6 +107,9 @@ export const autocompleteFiltersCollectionsQuery = gql`
           id
           name
         }
+      }
+      pageInfo {
+        ...PageInfo
       }
     }
   }
@@ -89,6 +129,9 @@ export const loadFiltersAttributesQuery = gql`
           node {
             ...AttributeValueDetails
           }
+        }
+        pageInfo {
+          ...PageInfo
         }
       }
     }

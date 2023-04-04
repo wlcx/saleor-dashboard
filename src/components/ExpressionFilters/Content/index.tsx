@@ -1,5 +1,6 @@
-import { Box, Dropdown } from "@saleor/macaw-ui/next"
-import React from "react"
+import { CircularProgress } from "@material-ui/core";
+import { Box, Dropdown } from "@saleor/macaw-ui/next";
+import React from "react";
 
 export const Content = ({ children }) => (
   <Dropdown.Content align="start">
@@ -15,4 +16,10 @@ export const Content = ({ children }) => (
       {children}
     </Box>
   </Dropdown.Content>
-)
+);
+
+export const Loader = () => (
+  <Box display="flex" justifyContent="center" paddingY={3}>
+    <CircularProgress size={11} />
+  </Box>
+);

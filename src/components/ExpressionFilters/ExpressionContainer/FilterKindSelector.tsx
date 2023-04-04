@@ -1,6 +1,7 @@
-import { Box, Expression } from "@saleor/macaw-ui/next";
+import { Expression } from "@saleor/macaw-ui/next";
 import React from "react";
 
+import { Loader } from "../Content";
 import { FilterKind, Value } from "../State/types";
 import { useFilterContext } from "./../State/context";
 
@@ -8,12 +9,14 @@ interface FilterKindProps {
   filterKind: FilterKind;
   choices: Value[];
   loading?: boolean;
+  onEnd: () => void;
 }
 
 export const FilterKindSelecor = ({
   filterKind,
   choices,
   loading,
+  onEnd,
 }: FilterKindProps) => {
   const context = useFilterContext();
 
@@ -22,16 +25,19 @@ export const FilterKindSelecor = ({
   };
 
   return (
-    <Expression.OperandDropdown triggerText={filterKind.selected.displayName}>
+    <Expression.OperandDropdown
+      onScrollEnd={onEnd}
+      triggerText={filterKind.selected.displayName}
+    >
       {choices.map(item => (
-        <Expression.OperantDropdownItem
+        <Expression.OperandDropdownItem
           key={item.id}
           onClick={() => handleFilterKindChange(item)}
         >
           {item.displayName}
-        </Expression.OperantDropdownItem>
+        </Expression.OperandDropdownItem>
       ))}
-      {loading && <Box>loading...</Box>}
+      {loading && <Loader />}
     </Expression.OperandDropdown>
   );
 };

@@ -9164,13 +9164,24 @@ export type InitialProductFilterCategoriesQueryVariables = Exact<{
 
 export type InitialProductFilterCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
 
+export type AutocompleteProductFilterAttributesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<AttributeFilterInput>;
+}>;
+
+
+export type AutocompleteProductFilterAttributesQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, slug: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
 export type AutocompleteFiltersCategoriesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
   search?: InputMaybe<Scalars['String']>;
   ids?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;
 
 
-export type AutocompleteFiltersCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
+export type AutocompleteFiltersCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type AutocompleteFiltersProductTypesQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -9179,7 +9190,7 @@ export type AutocompleteFiltersProductTypesQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteFiltersProductTypesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }> } | null };
+export type AutocompleteFiltersProductTypesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type AutocompleteFiltersCollectionsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -9188,7 +9199,7 @@ export type AutocompleteFiltersCollectionsQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteFiltersCollectionsQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null };
+export type AutocompleteFiltersCollectionsQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type LoadAttributeValuesQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -9198,7 +9209,7 @@ export type LoadAttributeValuesQueryVariables = Exact<{
 }>;
 
 
-export type LoadAttributeValuesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null };
+export type LoadAttributeValuesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type InitialProductFilterCollectionsQueryVariables = Exact<{
   collections?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
