@@ -24,9 +24,11 @@ export const UserContextError = {
   noPermissionsError: "noPermissionsError",
   externalLoginError: "externalLoginError",
   unknownLoginError: "unknownLoginError",
+  unauthorizedDashboardAccessError: "unauthorizedDashboardAccessError",
 } as const;
 
-export type UserContextError = typeof UserContextError[keyof typeof UserContextError];
+export type UserContextError =
+  (typeof UserContextError)[keyof typeof UserContextError];
 
 export interface UserContext {
   login: (username: string, password: string) => Promise<LoginData>;

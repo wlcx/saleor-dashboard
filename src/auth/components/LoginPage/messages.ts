@@ -24,6 +24,11 @@ export const errorMessages = defineMessages({
     defaultMessage: "You don't have permission to login.",
     description: "error message",
   },
+  unauthorizedDashboardAccessError: {
+    id: "iDE1Dt",
+    defaultMessage: "You don't have permission to access the dashboard.",
+    description: "error message",
+  },
 });
 
 export function getErrorMessage(
@@ -41,5 +46,7 @@ export function getErrorMessage(
       return intl.formatMessage(errorMessages.serverError);
     case "noPermissionsError":
       return intl.formatMessage(errorMessages.noPermissionsError);
+    case "unauthorizedDashboardAccessError":
+      return intl.formatMessage(errorMessages.unauthorizedDashboardAccessError);
   }
 }

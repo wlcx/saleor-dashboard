@@ -4,7 +4,6 @@ import { DEMO_MODE } from "@dashboard/config";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
@@ -45,7 +44,7 @@ export function useAuthProvider({
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } =
     useAuth();
   const navigate = useNavigator();
-  const { authenticated, authenticating, user } = useAuthState();
+  const { authenticated, authenticating } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage(
     "requestedExternalPluginId",
     null,
@@ -208,11 +207,7 @@ export function useAuthProvider({
     data: LoginData | GetExternalAccessTokenData,
   ) => {
     if (data.user && !data.user.isStaff) {
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),
-        title: intl.formatMessage(commonMessages.insufficientPermissions),
-      });
+      setErrors(["unauthorizedDashboardAccessError"]);
       await handleLogout();
     }
   };
@@ -222,8 +217,8 @@ export function useAuthProvider({
     requestLoginByExternalPlugin: handleRequestExternalLogin,
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
-    authenticating: authenticating && !errors.length,
-    authenticated: authenticated && user?.isStaff,
+    authenticating: authenticating && userDetails.loading && !errors.length,
+    authenticated: authenticated && userDetails.data?.me.isStaff,
     user: userDetails.data?.me,
     errors,
   };
