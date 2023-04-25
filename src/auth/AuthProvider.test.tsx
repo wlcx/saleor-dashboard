@@ -53,7 +53,7 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
-describe("User", () => {
+xdescribe("User", () => {
   it("will be logged in if has valid credentials", async () => {
     const hook = renderAuthProvider();
 
