@@ -6305,6 +6305,10 @@
     "context": "button",
     "string": "Apply"
   },
+  "iDE1Dt": {
+    "context": "error message",
+    "string": "You don't have permission to access the dashboard."
+  },
   "iERn5G": {
     "context": "header name input",
     "string": "Should start with `x-` or `authorization`"
