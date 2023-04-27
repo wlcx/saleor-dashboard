@@ -147,7 +147,6 @@ export function useAuthProvider({
       } else {
         setErrors(["loginError"]);
       }
-
       await logoutNonStaffUser(result.data.tokenCreate);
 
       return result.data.tokenCreate;
