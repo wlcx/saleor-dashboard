@@ -57,12 +57,10 @@ jobs:
       - name: Install deps
         run: |
           npm ci
-      - name: Download latest import stats
-        uses: actions/download-artifact@v3
-        with:
-          name: import-stats
       - name: "Comparing stats"
         run: |
           latest=$(env.MAIN_STATISTICS)
           current=$(npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info")
-          echo Statistics: $latest $current
+          echo Imports in main: $latest
+          echo Incomming imports: $current
+          echo Difference: $(latest - current)
