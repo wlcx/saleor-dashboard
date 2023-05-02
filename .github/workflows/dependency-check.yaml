@@ -5,6 +5,8 @@ jobs:
   current_state:
     runs-on: ubuntu-latest
     name: "Calculate current state"
+    outputs: 
+      main_statistics: ${{ steps.store_import_stats.outputs.MAIN_STATISTICS }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -28,10 +30,11 @@ jobs:
         run: |
           npm ci
       - name: Store import stats
+        id: store_import_stats
         run: |
           stats=$(npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info")
           echo "Statistics on main branch: ${stats}"
-          echo "MAIN_STATISTICS=${stats}" >> $GITHUB_ENV
+          echo "MAIN_STATISTICS=${stats}" >> $GITHUB_OUTPUT
 
   check_migation_status:
     runs-on: ubuntu-latest
@@ -58,8 +61,9 @@ jobs:
         run: |
           npm ci
       - name: "Calculate stats"
+        env:
+          latest: ${{ needs.current_state.outputs.main_statistics }}
         run: |
-          latest=${{ env.MAIN_STATISTICS }}
           current=$(npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info")
           echo Imports in main: $latest
           echo Incomming imports: $current
