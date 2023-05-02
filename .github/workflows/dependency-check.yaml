@@ -65,6 +65,13 @@ jobs:
           latest: ${{ needs.current_state.outputs.main_statistics }}
         run: |
           current=$(npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info")
+          difference=$(expr $latest - $current)
+          echo "IMPORT_DIFFERENCE=${difference}" >> $GITHUB_OUTPUT
           echo Imports in main: $latest
           echo Incomming imports: $current
-          echo Difference: $(latest - current)
+          echo Difference: $difference
+      - name: "MacawUI regression reported"
+        if: ${{ env.IMPORT_DIFFERENCE }} > 0
+        run: |
+          echo "Regression detected"
+          exit 1
