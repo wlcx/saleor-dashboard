@@ -2,43 +2,41 @@ name: MacawUI migration
 on: [push]
 
 jobs:
-  # update_migration_progress:
-  #   runs-on: ubuntu-latest
-  #   name: "Updating imports"
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version-file: '.nvmrc'
-  #     - name: Cache node modules
-  #       uses: actions/cache@v2
-  #       env:
-  #         cache-name: cache-node-modules
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-qa-${{ env.cache-name }}-
-  #           ${{ runner.os }}-qa-
-  #           ${{ runner.os }}-
+  current_state:
+    runs-on: ubuntu-latest
+    name: "Calculate current state"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: "main"
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
 
-  #     - name: Install deps
-  #       run: |
-  #         npm ci
-  #     - name: Store import stats
-  #       run: |
-  #         npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info" > .stat
-  #     - name: Upload import stats
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: import-stats
-  #         path: .stat
-      
+      - name: Install deps
+        run: |
+          npm ci
+      - name: Store import stats
+        run: |
+          stats=$(npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info")
+          echo "Statistics on main branch: ${stats}"
+          echo "MAIN_STATISTICS=${stats}" >> $GITHUB_ENV
 
   check_migation_status:
     runs-on: ubuntu-latest
     name: "Migration check"
-    # needs: update_migration_progress
+    needs: current_state
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
@@ -65,6 +63,6 @@ jobs:
           name: import-stats
       - name: "Comparing stats"
         run: |
-          latest=`cat .stat`
-          current=`npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info"`
+          latest=$(env.MAIN_STATISTICS)
+          current=$(npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info")
           echo Statistics: $latest $current
