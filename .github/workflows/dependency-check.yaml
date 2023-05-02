@@ -57,9 +57,9 @@ jobs:
       - name: Install deps
         run: |
           npm ci
-      - name: "Comparing stats"
+      - name: "Calculate stats"
         run: |
-          latest=$(env.MAIN_STATISTICS)
+          latest=${{ env.MAIN_STATISTICS }}
           current=$(npm run dep-status -- --output-type json | tail -n +5 | jq ".summary.info")
           echo Imports in main: $latest
           echo Incomming imports: $current
