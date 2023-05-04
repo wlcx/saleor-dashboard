@@ -45,6 +45,7 @@ jobs:
           echo "Imports in main: ${latest}"
           echo "Incomming imports: ${current}"
           echo "Difference: ${difference}"
+          echo "IMPORT_DIFFERENCE=${difference}" >> $GITHUB_ENV
       - name: "MacawUI regression reported"
       #   if: ${{ env.IMPORT_DIFFERENCE }} > 0
         run: |
