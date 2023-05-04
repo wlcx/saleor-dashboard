@@ -49,10 +49,10 @@ jobs:
       - name: "MacawUI regression reported"
         if: ${{ env.IMPORT_DIFFERENCE }} > 0
         run: |
-          echo "Regression detected: ${{ env.IMPORT_DIFFERENCE }}"
+          echo "Regression detected: +${{ env.IMPORT_DIFFERENCE }} imports"
           exit 1
       - name: "MacawUI migration progress"
         if: ${{ env.IMPORT_DIFFERENCE }} <= 0
         run: |
-          echo "Progress by: ${{ env.IMPORT_DIFFERENCE }}"
+          echo "Progress by: ${{ env.IMPORT_DIFFERENCE }} imports"
           exit 0
