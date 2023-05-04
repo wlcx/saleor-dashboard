@@ -23,7 +23,7 @@ import { maybe } from "@dashboard/misc";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+// import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -37,7 +37,7 @@ export interface AttributePageProps {
   attribute?: AttributeDetailsFragment | null | undefined;
   disabled: boolean;
   errors: AttributeErrorFragment[];
-  saveButtonBarState: ConfirmButtonTransitionState;
+  saveButtonBarState: any;
   values?:
     | NonNullable<AttributeDetailsQuery["attribute"]>["choices"]
     | undefined;
