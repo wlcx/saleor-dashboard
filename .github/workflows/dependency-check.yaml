@@ -39,12 +39,12 @@ jobs:
       - name: "Calculate stats"
         env:
           latest: ${{ needs.current_state.outputs.main_statistics }}
+          current: ${{ npx depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info" }}
         run: |
-          current=$(npx depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
-          difference=$(expr $current - ${{ env.latest }})
           echo "Imports in main: ${latest}"
           echo "Incomming imports: ${current}"
-          echo "Difference: ${difference}"
+      #echo "Difference: ${difference}"
+      #difference=${{ env.current - env.latest }}
       # echo "IMPORT_DIFFERENCE=${difference}" >> $GITHUB_ENV
       # - name: "MacawUI regression reported"
       #   if: ${{ env.IMPORT_DIFFERENCE }} > 0
