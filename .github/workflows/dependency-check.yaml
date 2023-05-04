@@ -41,7 +41,7 @@ jobs:
           latest: ${{ needs.current_state.outputs.main_statistics }}
         run: |
           current=$(npx depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
-          difference=$(expr $current - $latest)
+          difference=$(expr $current - 5)
           echo "Imports in main: ${latest}"
           echo "Incomming imports: ${current}"
       # echo "Difference: ${difference}"
