@@ -134,7 +134,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               disabled={disabled}
               variant="primary"
               onClick={submit}
-              type="submit"
+              type="button"
               data-test-id="submit"
             >
               <FormattedMessage
